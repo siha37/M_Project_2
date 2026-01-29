@@ -1,0 +1,63 @@
+# M-Project Prototype 2
+
+![Unity](https://img.shields.io/badge/Unity-6-000000?style=for-the-badge&logo=unity&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
+이 프로젝트는 단순한 기능 구현을 넘어, **멀티플레이어 게임의 복잡한 네트워크 구조를 심층적으로 학습하고 실무적인 개발 경험을 쌓기 위해 진행된 프로젝트**입니다. Unity Gaming Services(UGS)와 FishNet이라는 현대적인 네트워킹 솔루션을 통합하며 발생한 기술적 과제들을 해결하고, 확장 가능한 시스템 설계를 시도했습니다.
+
+## 학습 목표 및 시도 (Learning & Experience)
+
+본 프로젝트는 다음과 같은 기술적 도전과 경험을 중심으로 구축되었습니다.
+
+- **모던 네트워킹 스택의 이해와 숙달**: 
+  - 차세대 네트워킹 라이브러리인 **FishNet**을 사용하여 고성능 상태 동기화 및 RPC 구조를 학습했습니다.
+  - **Unity Gaming Services (UGS)**의 인증, 로비, 릴레이 시스템을 통합하며 클라우드 기반 인프라 활용 능력을 키웠습니다.
+- **서버 아키텍처의 최적화 및 통합 시도**:
+  - 초기에는 Python 커스텀 서버와 Unity P2P 방식을 병행하는 하이브리드 구조를 시도했으나, **실제 출시 환경에서의 유지보수 효율과 네트워크 동기화의 일관성**을 위해 **FishNet 전용 호스팅 방식**으로 전환했습니다.
+- **모듈화 및 확장성 설계 경험**:
+  - 퀘스트 시스템, 플레이어 역할 시스템 등을 독립적인 모듈로 설계하여, 거대해지는 프로젝트에서 코드의 의존성을 줄이고 재사용성을 높이는 아키텍처 설계 능력을 길렀습니다.
+- **현업 수준의 데이터 워크플로우 시도**:
+  - 구글 시트와 Unity 에디터를 연동하여 기획 데이터가 코드로 즉시 변환되는 파이프라인을 직접 구축하며 효율적인 협업 툴의 중요성을 체감했습니다.
+
+## 핵심 학습 포인트 (Key Challenges & Learnings)
+
+### 1. 네트워크 동기화 및 최적화
+- **FishNet**의 대역폭 최적화 기법을 학습하고, 서버-클라이언트 간의 정밀한 시간 동기화(Time Management)를 구현하여 네트워크 지연을 최소화하는 시도를 했습니다.
+- **UGS Lobby & Relay**를 통해 복잡한 네트워크 방화벽 환경(NAT)에서도 안정적인 연결을 유지하는 인프라 구조를 익혔습니다.
+
+### 2. 복합 시스템 설계
+- **Global Quest System**: 분산된 플레이어들이 하나의 목표를 공유할 때 발생하는 레이스 컨디션과 동기화 이슈를 처리하며 분산 시스템의 기본 원리를 학습했습니다.
+- **Object Pooling**: 대규모 네트워크 환경에서 GC(Garbage Collector) 부하를 줄이기 위한 고성능 풀링 기법을 적용했습니다.
+
+### 3. 서버 아키텍처의 진화와 통합
+- **Python 기반 커스텀 서버**에서 **FishNet 통합 호스팅**으로 전환하며, 실제 서비스 출시 관점에서의 유지보수 용이성과 아키텍처 단순화의 이점을 경험했습니다.
+- 초기 이기종 언어(C#, Python) 간의 소켓 통신 설계 경험을 바탕으로, 통합 프레임워크가 제공하는 강력한 동기화 기능과 생산성 향상을 비교 분석했습니다.
+
+## 프로젝트 구조
+
+```text
+root/
+├── Assets/
+│   └── MyFolder/
+│       └── 1. Scripts/
+│           ├── 0. System/      # 프로젝트의 심장부 (초기화 및 부트스트랩)
+│           ├── 1. UI/          # 복잡한 네트워크 상태를 사용자에게 투명하게 전달하는 UI
+│           ├── 4. Network/     # FishNet & UGS 통합의 핵심 로직
+│           ├── 6. GlobalQuest/ # 협동 멀티플레이의 핵심 시스템
+│           └── 7. PlayerRole/  # 역할 분담 및 상호작용 시스템
+├── Server/                     # 초기 프로토타입용 Python 백엔드 (현재는 FishNet 호스팅으로 통합)
+└── ProjectSettings/            # Unity의 다양한 설정값
+```
+
+## 사용된 기술 (Tech Stack)
+- **Client**: Unity 6 (6000.0.x), FishNet (Networking), UGS (Auth, Lobby, Relay, Vivox)
+- **Backend**: FishNet Dedicated Hosting (Primary), Python 3.13 (Initial Prototype)
+- **Tooling**: Google Sheets API Integration, Unity Editor Scripting
+
+## 개발 철학 및 규칙
+- **Clean Architecture**: 기능을 모듈별로 분리하여 유지보수가 용이하게 설계.
+- **Log Categorization**: 모든 네트워크 패킷과 로직에 카테고리별 로그를 남겨 디버깅 생산성 향상.
+- **Consistent Convention**: C#의 PascalCase을 준수하여 가독성 유지.
+---
+이 프로젝트는 저의 기술적 한계를 마주하고 이를 극복하는 과정 자체가 소중한 자산이 된 학습 기록입니다.
