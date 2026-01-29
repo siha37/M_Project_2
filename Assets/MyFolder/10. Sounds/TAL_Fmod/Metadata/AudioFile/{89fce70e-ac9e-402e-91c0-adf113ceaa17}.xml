@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{89fce70e-ac9e-402e-91c0-adf113ceaa17}">
+		<property name="assetPath">
+			<value>Main/Ambience/ENV_BackLoop_15s.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>15</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d1e128d3-4fef-42c4-a07e-52320aa21051}</destination>
+		</relationship>
+	</object>
+</objects>

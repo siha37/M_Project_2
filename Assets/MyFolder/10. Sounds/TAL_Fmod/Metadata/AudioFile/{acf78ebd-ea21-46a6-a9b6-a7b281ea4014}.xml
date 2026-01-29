@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{acf78ebd-ea21-46a6-a9b6-a7b281ea4014}">
+		<property name="assetPath">
+			<value>Main/Ambience/ENV_Leaf_1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>3</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d1e128d3-4fef-42c4-a07e-52320aa21051}</destination>
+		</relationship>
+	</object>
+</objects>

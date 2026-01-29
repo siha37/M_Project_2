@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "692326975188",
+    "project_id": "tal-project-3c7c9",
+    "storage_bucket": "tal-project-3c7c9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692326975188:android:2dc7a756fdc0884cec1d41",
+        "android_client_info": {
+          "package_name": "com.SIHA.TAL"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_YVm0Khr0TEMuFuC-rzG7OCkheLo-bIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

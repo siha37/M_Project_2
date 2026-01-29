@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "TypeId": 1,
+      "Hp": 10.0,
+      "Speed": 9.0,
+      "AttackSpeed": 0.0,
+      "ShootingDataID": "1",
+      "DetectionRange": 7.0,
+      "AttackRange": 7.0,
+      "LoseTargetRange": 7.0,
+      "FieldOfViewAngle": 90.0,
+      "StoppingDistance": 7.0,
+      "RotationSpeed": 10.0,
+      "MinDistanceToTarget": 3.0,
+      "RetreatDistance": 7.0,
+      "AimPrecision": 0.0
+    },
+    {
+      "TypeId": 2,
+      "Hp": 10.0,
+      "Speed": 20.0,
+      "AttackSpeed": 0.0,
+      "ShootingDataID": "1",
+      "DetectionRange": 7.0,
+      "AttackRange": 7.0,
+      "LoseTargetRange": 7.0,
+      "FieldOfViewAngle": 90.0,
+      "StoppingDistance": 7.0,
+      "RotationSpeed": 10.0,
+      "MinDistanceToTarget": 3.0,
+      "RetreatDistance": 7.0,
+      "AimPrecision": 0.0
+    },
+    {
+      "TypeId": 3,
+      "Hp": 10.0,
+      "Speed": 40.0,
+      "AttackSpeed": 0.0,
+      "ShootingDataID": "1",
+      "DetectionRange": 7.0,
+      "AttackRange": 7.0,
+      "LoseTargetRange": 7.0,
+      "FieldOfViewAngle": 90.0,
+      "StoppingDistance": 7.0,
+      "RotationSpeed": 10.0,
+      "MinDistanceToTarget": 3.0,
+      "RetreatDistance": 7.0,
+      "AimPrecision": 0.0
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{74e70a43-5f65-4528-bed5-a6e0c50766af}">
+		<property name="assetPath">
+			<value>Main/UI/UI_Card_Open_FIX.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.1000000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d1e128d3-4fef-42c4-a07e-52320aa21051}</destination>
+		</relationship>
+	</object>
+</objects>

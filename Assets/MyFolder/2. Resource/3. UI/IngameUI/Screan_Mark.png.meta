@@ -1,0 +1,806 @@
+fileFormatVersion: 2
+guid: 5166e4fcad974ae44bbc4482478743fd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5874975258390143563
+    second: Screan_Mark_0
+  - first:
+      213: -5595661360908004862
+    second: Screan_Mark_1
+  - first:
+      213: -4216841885381313438
+    second: Screan_Mark_2
+  - first:
+      213: -7985885852404658936
+    second: Screan_Mark_3
+  - first:
+      213: 2688795654541159203
+    second: Screan_Mark_4
+  - first:
+      213: -1290303705326608444
+    second: Screan_Mark_5
+  - first:
+      213: -1393236198990160699
+    second: Screan_Mark_6
+  - first:
+      213: 7109880936491680833
+    second: Screan_Mark_7
+  - first:
+      213: -4134999920701654515
+    second: Screan_Mark_8
+  - first:
+      213: 1727695506191667834
+    second: Screan_Mark_9
+  - first:
+      213: -7963262817059474764
+    second: Screan_Mark_10
+  - first:
+      213: 7735302555769815549
+    second: Screan_Mark_11
+  - first:
+      213: 9050464991913668826
+    second: Screan_Mark_12
+  - first:
+      213: 2443713800791836481
+    second: Screan_Mark_13
+  - first:
+      213: -8517379014476729865
+    second: Screan_Mark_14
+  - first:
+      213: 1799191406280969333
+    second: Screan_Mark_15
+  - first:
+      213: -4622562093065206688
+    second: Screan_Mark_16
+  - first:
+      213: -4661636903644698573
+    second: Screan_Mark_17
+  - first:
+      213: 291648849429037033
+    second: Screan_Mark_18
+  - first:
+      213: -3076456816845388568
+    second: Screan_Mark_19
+  - first:
+      213: 9124890882201521
+    second: Screan_Mark_20
+  - first:
+      213: -2123244581238751130
+    second: Screan_Mark_21
+  - first:
+      213: 6275040619311482317
+    second: Screan_Mark_22
+  - first:
+      213: -6933140995582815270
+    second: Screan_Mark_23
+  - first:
+      213: 2859884695211981212
+    second: Screan_Mark_24
+  - first:
+      213: 7360559603604424932
+    second: Screan_Mark_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Screan_Mark_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 1772
+        height: 1768
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b42ad8cdeda188150800000000000000
+      internalID: 5874975258390143563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_1
+      rect:
+        serializedVersion: 2
+        x: 1762
+        y: 925
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20213bba3a73852b0800000000000000
+      internalID: -5595661360908004862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_2
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 32
+        width: 21
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26cbbd3a5a4ca75c0800000000000000
+      internalID: -4216841885381313438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_3
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 29
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80d4a96d02f6c2190800000000000000
+      internalID: -7985885852404658936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_4
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 32
+        width: 33
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32b2a86e665805520800000000000000
+      internalID: 2688795654541159203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_5
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 26
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cf13a7cd9be71ee0800000000000000
+      internalID: -1290303705326608444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_6
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 30
+        width: 22
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ccd9f60f0b3aace0800000000000000
+      internalID: -1393236198990160699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_7
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 32
+        width: 35
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14488eeba0f5ba260800000000000000
+      internalID: 7109880936491680833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_8
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 22
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0a3f44fa778d96c0800000000000000
+      internalID: -4134999920701654515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_9
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 30
+        width: 22
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a72d79eb8e10af710800000000000000
+      internalID: 1727695506191667834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_10
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 27
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b2f718b8aecc7190800000000000000
+      internalID: -7963262817059474764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_11
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 26
+        width: 22
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df1c4dae0b0595b60800000000000000
+      internalID: 7735302555769815549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_12
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 33
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad07f1f65f5b99d70800000000000000
+      internalID: 9050464991913668826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_13
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 29
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 147cae421c0d9e120800000000000000
+      internalID: 2443713800791836481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_14
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 26
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f17fb0d9e03cc980800000000000000
+      internalID: -8517379014476729865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_15
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 24
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57c005e2d0308f810800000000000000
+      internalID: 1799191406280969333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_16
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 21
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06489aa844c59dfb0800000000000000
+      internalID: -4622562093065206688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_17
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 16
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 338e76e3fe98e4fb0800000000000000
+      internalID: -4661636903644698573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_18
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 20
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef7e5555152c0400800000000000000
+      internalID: 291648849429037033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_19
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 22
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e40a1923da3e45d0800000000000000
+      internalID: -3076456816845388568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_20
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 15
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b7d5a73a0b602000800000000000000
+      internalID: 9124890882201521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_21
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 12
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 660cdf38d48b882e0800000000000000
+      internalID: -2123244581238751130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_22
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 17
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc54539523c651750800000000000000
+      internalID: 6275040619311482317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_23
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 10
+        width: 13
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad396947ff888cf90800000000000000
+      internalID: -6933140995582815270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_24
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 5
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c99bfac5af950b720800000000000000
+      internalID: 2859884695211981212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Screan_Mark_25
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 0
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e88ee826f5f52660800000000000000
+      internalID: 7360559603604424932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Screan_Mark_0: 5874975258390143563
+      Screan_Mark_1: -5595661360908004862
+      Screan_Mark_10: -7963262817059474764
+      Screan_Mark_11: 7735302555769815549
+      Screan_Mark_12: 9050464991913668826
+      Screan_Mark_13: 2443713800791836481
+      Screan_Mark_14: -8517379014476729865
+      Screan_Mark_15: 1799191406280969333
+      Screan_Mark_16: -4622562093065206688
+      Screan_Mark_17: -4661636903644698573
+      Screan_Mark_18: 291648849429037033
+      Screan_Mark_19: -3076456816845388568
+      Screan_Mark_2: -4216841885381313438
+      Screan_Mark_20: 9124890882201521
+      Screan_Mark_21: -2123244581238751130
+      Screan_Mark_22: 6275040619311482317
+      Screan_Mark_23: -6933140995582815270
+      Screan_Mark_24: 2859884695211981212
+      Screan_Mark_25: 7360559603604424932
+      Screan_Mark_3: -7985885852404658936
+      Screan_Mark_4: 2688795654541159203
+      Screan_Mark_5: -1290303705326608444
+      Screan_Mark_6: -1393236198990160699
+      Screan_Mark_7: 7109880936491680833
+      Screan_Mark_8: -4134999920701654515
+      Screan_Mark_9: 1727695506191667834
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

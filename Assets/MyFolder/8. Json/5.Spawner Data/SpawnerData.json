@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "TypeId": 1,
+      "Hp": 100.0,
+      "SpawnInterval": 10.0,
+      "SpawnDelay": 3.0,
+      "MaxSpawnCount": 10,
+      "OneTimeSpawnAmount": 5
+    }
+  ]
+}

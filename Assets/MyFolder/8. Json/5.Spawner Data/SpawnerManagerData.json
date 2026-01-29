@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "TypeId": 1,
+      "SpawnTime": "2/10/20/30/40",
+      "OneTimeSpawnerAmount": 2,
+      "StartEnemyTypeId": 1
+    }
+  ]
+}

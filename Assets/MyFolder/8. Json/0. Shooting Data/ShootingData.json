@@ -1,0 +1,74 @@
+{
+  "data": [
+    {
+      "TypeId": 1,
+      "ShotDelay": 3.0,
+      "BurstCount": 1,
+      "ReloadTime": 1.0,
+      "MagazineCapacity": 100,
+      "FullAuto": false,
+      "ShotAngle": 0.0,
+      "BulletSpeed": 7.0,
+      "BulletSize": 1.2,
+      "LifeCycle": 10.0,
+      "BulletDamage": 5.0,
+      "PiercingCount": 3
+    },
+    {
+      "TypeId": 2,
+      "ShotDelay": 0.1,
+      "BurstCount": 4,
+      "ReloadTime": 4.0,
+      "MagazineCapacity": 100,
+      "FullAuto": true,
+      "ShotAngle": 45.0,
+      "BulletSpeed": 5.0,
+      "BulletSize": 1.2,
+      "LifeCycle": 100.0,
+      "BulletDamage": 1.0,
+      "PiercingCount": 10
+    },
+    {
+      "TypeId": 3,
+      "ShotDelay": 1.0,
+      "BurstCount": 1,
+      "ReloadTime": 3.0,
+      "MagazineCapacity": 4,
+      "FullAuto": false,
+      "ShotAngle": 0.0,
+      "BulletSpeed": 27.0,
+      "BulletSize": 1.6,
+      "LifeCycle": 44.0,
+      "BulletDamage": 33.0,
+      "PiercingCount": 5
+    },
+    {
+      "TypeId": 4,
+      "ShotDelay": 0.1,
+      "BurstCount": 1,
+      "ReloadTime": 3.0,
+      "MagazineCapacity": 51,
+      "FullAuto": true,
+      "ShotAngle": 10.0,
+      "BulletSpeed": 20.0,
+      "BulletSize": 1.2,
+      "LifeCycle": 10.0,
+      "BulletDamage": 8.0,
+      "PiercingCount": 0
+    },
+    {
+      "TypeId": 5,
+      "ShotDelay": 0.1,
+      "BurstCount": 3,
+      "ReloadTime": 3.0,
+      "MagazineCapacity": 333,
+      "FullAuto": true,
+      "ShotAngle": 30.0,
+      "BulletSpeed": 40.0,
+      "BulletSize": 2.4,
+      "LifeCycle": 0.13,
+      "BulletDamage": 1.5,
+      "PiercingCount": 0
+    }
+  ]
+}

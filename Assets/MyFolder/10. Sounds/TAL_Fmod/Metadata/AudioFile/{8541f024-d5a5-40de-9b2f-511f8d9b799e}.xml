@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{8541f024-d5a5-40de-9b2f-511f8d9b799e}">
+		<property name="assetPath">
+			<value>Main/게임(시스템)/SYS_Player_DeadAlert_Mono.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d1e128d3-4fef-42c4-a07e-52320aa21051}</destination>
+		</relationship>
+	</object>
+</objects>

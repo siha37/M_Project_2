@@ -1,0 +1,442 @@
+fileFormatVersion: 2
+guid: 60f5fe538558d544b9e249a5429d7232
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7040801408718030535
+    second: sot_out_0
+  - first:
+      213: -3321703502471061862
+    second: sot_out_1
+  - first:
+      213: -4590698610155206583
+    second: sot_out_2
+  - first:
+      213: -6947240041020272487
+    second: sot_out_3
+  - first:
+      213: 1280422761274266148
+    second: sot_out_4
+  - first:
+      213: -4401300239289817479
+    second: sot_out_5
+  - first:
+      213: 2445481540798099889
+    second: sot_out_6
+  - first:
+      213: 909880913257215265
+    second: sot_out_7
+  - first:
+      213: 6083302464719509843
+    second: sot_out_8
+  - first:
+      213: 5155053605938338067
+    second: sot_out_9
+  - first:
+      213: 6793829827389113301
+    second: sot_out_10
+  - first:
+      213: -8392443745272888565
+    second: sot_out_11
+  - first:
+      213: 8357642451934632296
+    second: sot_out_12
+  - first:
+      213: 4734334771937228923
+    second: sot_out_13
+  - first:
+      213: 3365709277560496400
+    second: sot_out_14
+  - first:
+      213: -3600184627470643846
+    second: sot_out_15
+  - first:
+      213: 1501302665065794165
+    second: sot_out_16
+  - first:
+      213: -5907438421706547845
+    second: sot_out_17
+  - first:
+      213: 5062566270765600357
+    second: sot_out_18
+  - first:
+      213: -1413589628960462193
+    second: sot_out_19
+  - first:
+      213: -8807362071993733640
+    second: sot_out_20
+  - first:
+      213: -7345375006716789397
+    second: sot_out_21
+  - first:
+      213: 5882325196108683428
+    second: sot_out_22
+  - first:
+      213: -2072648735809909673
+    second: sot_out_23
+  - first:
+      213: 8339035281024268217
+    second: sot_out_24
+  - first:
+      213: 4768203311100274216
+    second: sot_out_25
+  - first:
+      213: -6235403541444641021
+    second: sot_out_26
+  - first:
+      213: 2297727417400133530
+    second: sot_out_27
+  - first:
+      213: -6993128769007967252
+    second: sot_out_28
+  - first:
+      213: -7014683989351543619
+    second: sot_out_29
+  - first:
+      213: -1970346768697045032
+    second: sot_out_30
+  - first:
+      213: 3581545269245306252
+    second: sot_out_31
+  - first:
+      213: 2922265683522205282
+    second: sot_out_32
+  - first:
+      213: 1277484314221007117
+    second: sot_out_33
+  - first:
+      213: -1600757751478173277
+    second: sot_out_34
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sot_out_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 939ba4b2c6c0a4e90800000000000000
+      internalID: -7040801408718030535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9e9a0e7340f6e1d0800000000000000
+      internalID: -3321703502471061862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 948c1d6cfef8a40c0800000000000000
+      internalID: -4590698610155206583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 990dd91adf1769f90800000000000000
+      internalID: -6947240041020272487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_4
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 422d318a7b9f4c110800000000000000
+      internalID: 1280422761274266148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_5
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 976e94f50c07be2c0800000000000000
+      internalID: -4401300239289817479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_6
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b1bb00318810f120800000000000000
+      internalID: 2445481540798099889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_7
+      rect:
+        serializedVersion: 2
+        x: 3584
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 125ba9eaedb80ac00800000000000000
+      internalID: 909880913257215265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sot_out_8
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 0
+        width: 512
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3595dd66c5b3c6450800000000000000
+      internalID: 6083302464719509843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0e66c10410834934f8cda7022e319838
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      sot_out_0: -7040801408718030535
+      sot_out_1: -3321703502471061862
+      sot_out_2: -4590698610155206583
+      sot_out_3: -6947240041020272487
+      sot_out_4: 1280422761274266148
+      sot_out_5: -4401300239289817479
+      sot_out_6: 2445481540798099889
+      sot_out_7: 909880913257215265
+      sot_out_8: 6083302464719509843
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,6 @@
+{
+  "SERVER_IP": "0.0.0.0",
+  "SERVER_PORT": 9122,
+  "MAX_PLAYERS": 1000,
+  "MAX_ROOMS": 100
+} 

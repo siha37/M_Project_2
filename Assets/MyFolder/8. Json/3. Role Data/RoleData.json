@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "Role": "Normal",
+      "CanUseSkill1": false
+    },
+    {
+      "Role": "Destroyer",
+      "CanUseSkill1": true
+    }
+  ]
+}

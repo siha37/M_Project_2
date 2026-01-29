@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "TypeId": 1,
+      "Name": "개민폐 ㅋㅋ",
+      "Hp": 200.0,
+      "Speed": 5.0,
+      "AttackSpeed": 0.0,
+      "Defence": 100.0,
+      "DefenceRecoverDelay": 1.0,
+      "DefenceRecoverAmountForFrame": 0.06,
+      "Revival": 3,
+      "ShootingDataID": "2",
+      "SkinID": 1
+    },
+    {
+      "TypeId": 2,
+      "Name": "케이틀린",
+      "Hp": 200.0,
+      "Speed": 5.0,
+      "AttackSpeed": 0.0,
+      "Defence": 100.0,
+      "DefenceRecoverDelay": 1.0,
+      "DefenceRecoverAmountForFrame": 0.06,
+      "Revival": 3,
+      "ShootingDataID": "3",
+      "SkinID": 1
+    },
+    {
+      "TypeId": 3,
+      "Name": "루시안",
+      "Hp": 200.0,
+      "Speed": 5.0,
+      "AttackSpeed": 3.0,
+      "Defence": 100.0,
+      "DefenceRecoverDelay": 1.0,
+      "DefenceRecoverAmountForFrame": 0.06,
+      "Revival": 3,
+      "ShootingDataID": "4",
+      "SkinID": 1
+    },
+    {
+      "TypeId": 4,
+      "Name": "죠죠죠",
+      "Hp": 200.0,
+      "Speed": 6.0,
+      "AttackSpeed": 6.0,
+      "Defence": 100.0,
+      "DefenceRecoverDelay": 1.0,
+      "DefenceRecoverAmountForFrame": 0.06,
+      "Revival": 3,
+      "ShootingDataID": "5",
+      "SkinID": 1
+    }
+  ]
+}

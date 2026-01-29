@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "CardId": 1,
+      "CardName": "ㅇㅇ",
+      "Description": "ㅇㅇㅇ",
+      "BulletSpeedMinPercentage": "5",
+      "BulletSpeedMaxPercentage": "10",
+      "BulletDamageMinPercentage": "5",
+      "BulletDamageMaxPercentage": "10",
+      "SpeedMinPercentage": "5",
+      "SpeedMaxPercentage": "10",
+      "HpMinPercentage": "5",
+      "HpMaxPercentage": "10",
+      "DefenceMinPercentage": "5",
+      "DefenceMaxPercentage": "10",
+      "BulletSizeMinPercentage": "5",
+      "BulletSizeMaxPercentage": "10",
+      "ShotDelayMinPercentage": "5",
+      "ShotDelayMaxPercentage": "10",
+      "MagazineCapacityMinPercentage": "5",
+      "MagazineCapacityMaxPercentage": "10"
+    }
+  ]
+}

@@ -1,0 +1,459 @@
+fileFormatVersion: 2
+guid: 80d7f600eb49335408ff416214181e1b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 942869293119252221
+    second: mirror_create_sheet_0
+  - first:
+      213: -8985693729190971219
+    second: mirror_create_sheet_1
+  - first:
+      213: 2708881269144127565
+    second: mirror_create_sheet_2
+  - first:
+      213: 172017358068751687
+    second: mirror_create_sheet_3
+  - first:
+      213: -1508513236794115723
+    second: mirror_create_sheet_4
+  - first:
+      213: 8401419261798262722
+    second: mirror_create_sheet_5
+  - first:
+      213: 7090348254417731310
+    second: mirror_create_sheet_6
+  - first:
+      213: -2739747057627622978
+    second: mirror_create_sheet_7
+  - first:
+      213: -182427091102188416
+    second: mirror_create_sheet_8
+  - first:
+      213: -3590712777410633893
+    second: mirror_create_sheet_9
+  - first:
+      213: -4546022645925244914
+    second: mirror_create_sheet_10
+  - first:
+      213: 699608767149028951
+    second: mirror_create_sheet_11
+  - first:
+      213: 8235250406119737168
+    second: mirror_create_sheet_12
+  - first:
+      213: -8171271973832895903
+    second: mirror_create_sheet_13
+  - first:
+      213: 8186431571137209943
+    second: mirror_create_sheet_14
+  - first:
+      213: -488415446525331536
+    second: mirror_create_sheet_15
+  - first:
+      213: -2756645323999019195
+    second: mirror_create_sheet_16
+  - first:
+      213: -4720007610795812401
+    second: mirror_create_sheet_17
+  - first:
+      213: 1747493544437010419
+    second: mirror_create_sheet_18
+  - first:
+      213: -2597786623449558416
+    second: mirror_create_sheet_19
+  - first:
+      213: 6953965335089628460
+    second: mirror_create_sheet_20
+  - first:
+      213: 5109717033557908617
+    second: mirror_create_sheet_21
+  - first:
+      213: -8895200110077505492
+    second: mirror_create_sheet_22
+  - first:
+      213: -7585125795907117358
+    second: mirror_create_sheet_23
+  - first:
+      213: -3650308185949140822
+    second: mirror_create_sheet_24
+  - first:
+      213: -8415406804709454709
+    second: mirror_create_sheet_25
+  - first:
+      213: -3441376484182026248
+    second: mirror_create_sheet_26
+  - first:
+      213: 8107561021019386066
+    second: mirror_create_sheet_27
+  - first:
+      213: 7281504859422201191
+    second: mirror_create_sheet_28
+  - first:
+      213: -5608594057687177207
+    second: mirror_create_sheet_29
+  - first:
+      213: 4068294359286786875
+    second: mirror_create_sheet_30
+  - first:
+      213: -3554639871146072636
+    second: mirror_create_sheet_31
+  - first:
+      213: 1083899669790339300
+    second: mirror_create_sheet_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mirror_create_sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df62ff560aeb51d00800000000000000
+      internalID: 942869293119252221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_1
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da8fd1b59276c4380800000000000000
+      internalID: -8985693729190971219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d488b0a7921e79520800000000000000
+      internalID: 2708881269144127565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_3
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74d93e230e0236200800000000000000
+      internalID: 172017358068751687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_4
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57979ed143fa01be0800000000000000
+      internalID: -1508513236794115723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_5
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c72c945e46d79470800000000000000
+      internalID: 8401419261798262722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_6
+      rect:
+        serializedVersion: 2
+        x: 4608
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eee316ecb2af56260800000000000000
+      internalID: 7090348254417731310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_7
+      rect:
+        serializedVersion: 2
+        x: 5376
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb11faf11967af9d0800000000000000
+      internalID: -2739747057627622978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_8
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08c3275f683e77df0800000000000000
+      internalID: -182427091102188416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mirror_create_sheet_9
+      rect:
+        serializedVersion: 2
+        x: 6912
+        y: 0
+        width: 768
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f9bfbd0c93b2ec0800000000000000
+      internalID: -3590712777410633893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1d762d77a7c274743a09053bc6a67b80
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      mirror_create_sheet_0: 942869293119252221
+      mirror_create_sheet_1: -8985693729190971219
+      mirror_create_sheet_2: 2708881269144127565
+      mirror_create_sheet_3: 172017358068751687
+      mirror_create_sheet_4: -1508513236794115723
+      mirror_create_sheet_5: 8401419261798262722
+      mirror_create_sheet_6: 7090348254417731310
+      mirror_create_sheet_7: -2739747057627622978
+      mirror_create_sheet_8: -182427091102188416
+      mirror_create_sheet_9: -3590712777410633893
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

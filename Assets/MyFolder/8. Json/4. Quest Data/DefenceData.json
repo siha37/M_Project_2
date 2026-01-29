@@ -1,0 +1,55 @@
+{
+  "data": [
+    {
+      "TypeId": 1,
+      "LimitTime": 2.0,
+      "Distance": 30.0,
+      "WaitingTime": 10.0,
+      "Target": 30.0,
+      "Progress": 0.0,
+      "MaxSpawnCount": 10,
+      "SpawnInterval": 4.0,
+      "TargetEnemyDataId": 1,
+      "OneTimeSpawnAmount": 4,
+      "BaseSpawnInvincibleOffTime": 2.0,
+      "DefenceAmount": 1,
+      "DefenceTargetID": 1,
+      "RewardCardId": 1,
+      "DefeatCardId": 1
+    },
+    {
+      "TypeId": 2,
+      "LimitTime": 2.0,
+      "Distance": 30.0,
+      "WaitingTime": 10.0,
+      "Target": 30.0,
+      "Progress": 0.0,
+      "MaxSpawnCount": 10,
+      "SpawnInterval": 4.0,
+      "TargetEnemyDataId": 1,
+      "OneTimeSpawnAmount": 4,
+      "BaseSpawnInvincibleOffTime": 2.0,
+      "DefenceAmount": 1,
+      "DefenceTargetID": 1,
+      "RewardCardId": 1,
+      "DefeatCardId": 1
+    },
+    {
+      "TypeId": 3,
+      "LimitTime": 2.0,
+      "Distance": 30.0,
+      "WaitingTime": 10.0,
+      "Target": 30.0,
+      "Progress": 0.0,
+      "MaxSpawnCount": 10,
+      "SpawnInterval": 4.0,
+      "TargetEnemyDataId": 1,
+      "OneTimeSpawnAmount": 4,
+      "BaseSpawnInvincibleOffTime": 2.0,
+      "DefenceAmount": 1,
+      "DefenceTargetID": 1,
+      "RewardCardId": 1,
+      "DefeatCardId": 1
+    }
+  ]
+}
