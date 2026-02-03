@@ -4,6 +4,12 @@
 ![C#](https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
+## 프로젝트 영상
+
+### 게임플레이 데모
+[![게임플레이 영상](https://img.youtube.com/vi/HGdqI_D9mH8/maxresdefault.jpg)](https://youtu.be/HGdqI_D9mH8)
+
+---
 ## 학습 목표 및 시도 (Learning & Experience)
 
 본 프로젝트는 다음과 같은 기술적 도전과 경험을 중심으로 구축되었습니다.
