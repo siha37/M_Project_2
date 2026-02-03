@@ -209,11 +209,13 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
 
             if (bulletPool.Count > 0)
             {
+                // 총알 획득 및 디큐
                 ServerBullet bullet = bulletPool.Dequeue();
+                // 총알 초기화 및 연결 / 활성화 등록
                 bullet.InitializeWithConnection(startPos, angle, speed, damage, lifetime, size, piercing, shooter);
                 activeBullets.Add(bullet);
 
-                // ✅ 수정: CreateVisualBulletRpc를 먼저 전송 (Update 전)
+                // 시각 총알 생성
                 CreateVisualBulletRpc(startPos, angle, speed, lifetime, size, bullet.bulletId, 0f);
 
                 // 그 다음 Update 실행 (네트워크 지연 보정)
@@ -223,9 +225,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
                 if (bullet.bulletId == 0)
                 {
                     // 이미 충돌로 반환됨 - 발사 즉시 충돌한 경우
-                    LogManager.Log(LogCategory.Projectile, 
-                        $"⚡ 총알이 발사 즉시 충돌하여 반환됨", this);
-                    return;
+                    LogManager.Log(LogCategory.Projectile, $"⚡ 총알이 발사 즉시 충돌하여 반환됨", this);
                 }
             }
             else
@@ -240,12 +240,12 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
                     bullet.InitializeWithConnection(startPos, angle, speed, damage, lifetime, size, piercing, shooter);
                     activeBullets.Add(bullet);
 
-                    // ✅ CreateVisualBulletRpc 먼저
+                    // CreateVisualBulletRpc 먼저
                     CreateVisualBulletRpc(startPos, angle, speed, lifetime, size, bullet.bulletId, 0f);
                     
                     bullet.Update(Time.fixedDeltaTime);
 
-                    // ✅ Update 중 충돌로 반환되었는지 확인
+                    // Update 중 충돌로 반환되었는지 확인
                     if (bullet.bulletId == 0)
                     {
                         LogManager.Log(LogCategory.Projectile, 
@@ -1209,9 +1209,10 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
 
         #region Initialization Methods
         
+        // 일반 총알 초기화 함수
         public void InitializeWithConnection(Vector3 startPos, float angle, float speed, float damage, float lifetime,float size,float piercing, NetworkConnection shooter)
         {
-            this.bulletId = nextBulletId++; // ✅ 고유 ID 할당
+            this.bulletId = nextBulletId++; // 고유 ID 할당
             this.position = startPos;
             this.direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
             this.speed = speed;
@@ -1221,15 +1222,16 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             this.piercing = piercing;
             this.elapsed = 0f;
         
-            // ✅ FishNet 공식 권장: 안전한 Owner ID 추출
+            // FishNet 공식 권장: 안전한 Owner ID 추출
             this.ownerNetworkId = (uint)(shooter?.ClientId ?? 0);  // OwnerId 대신 ClientId 사용
         
-            // ✅ 발사자 타입 자동 감지
+            // 발사자 타입 자동 감지
             this.ownerType = DetermineOwnerType(shooter);
 
             this.ownerGameObject = shooter?.FirstObject.gameObject;
         }
 
+        // 적군 총알 초기화 함수
         public void InitializeForEnemy(Vector3 startPos, float angle, float speed, float damage, float lifetime,float size,float piercing, GameObject enemyObject)
         {
             this.bulletId = nextBulletId++;
@@ -1242,7 +1244,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             this.piercing = piercing;
             this.elapsed = 0f;
 
-            // ✅ 적군은 NetworkConnection 대신 GameObject 참조 저장
+            // 적군은 NetworkConnection 대신 GameObject 참조 저장
             this.ownerNetworkId = 111; // 적군은 NetworkConnection이 없으므로 111
             this.ownerType = BulletOwnerType.Enemy;
 
@@ -1253,11 +1255,12 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
 
         #region Helper Methods
         
+        //발사자의 타입을 재정립 후 반환
         private BulletOwnerType DetermineOwnerType(NetworkConnection shooter)
         {
             if (shooter == null) return BulletOwnerType.Neutral;
         
-            // ✅ 적군 AI는 NetworkConnection이 null이거나 FirstObject가 비어있을 수 있음
+            // 적군 AI는 NetworkConnection이 null이거나 FirstObject가 비어있을 수 있음
             // 이 경우 GameObject를 직접 확인해야 함
             GameObject shooterObj = null;
         
@@ -1267,13 +1270,10 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             }
             else
             {
-                // ✅ FirstObject가 비어있는 경우, 다른 방법으로 발사자 확인
-                // 예: 발사 위치나 다른 식별자로 판단
+                // FirstObject가 비어있는 경우, 다른 방법으로 발사자 확인
                 LogManager.Log(LogCategory.Projectile, 
                     $"발사자 NetworkConnection의 FirstObject가 비어있음. ClientId: {shooter.ClientId}");
             
-                // ✅ 적군 AI는 보통 특정 태그나 컴포넌트로 식별 가능
-                // 이 부분은 실제 게임 구조에 따라 조정 필요
                 return BulletOwnerType.Enemy; // 기본적으로 적군으로 가정
             }
         
@@ -1296,11 +1296,12 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             return BulletOwnerType.Neutral;
         }
 
+        //발사자 오브젝트 반환
         private GameObject GetOwnerGameObject()
         {
             if (ownerNetworkId > 0)
             {
-                // ✅ FishNet ServerManager를 통한 안전한 Connection 조회
+                // FishNet ServerManager를 통한 Connection 조회
                 if (InstanceFinder.ServerManager.Clients.TryGetValue((int)ownerNetworkId, out NetworkConnection conn))
                 {
                     return conn.FirstObject?.gameObject;
@@ -1309,16 +1310,19 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             return null;
         }
 
+        // 생명주기 반환
         public bool IsExpired()
         {
             return elapsed >= lifetime;
         }
 
+        // 진행 방향 반환
         public Vector2 GetDirection()
         {
             return direction;
         }
 
+        // 총알 초기화
         public void Reset()
         {
             bulletId = 0;
@@ -1337,16 +1341,17 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
 
         #region Update & Collision Detection
         
+        // 총알 위치 업데이트
         public void Update(float deltaTime)
         {
             prevPosition = position;
             position += direction * (speed * deltaTime);
             elapsed += deltaTime;
 
-            // ✅ 개선된 충돌 검사 구현
             SweepBoxEnter();
         }
 
+        //RayCast 충돌 확인
         private void SweepBoxEnter()
         {
             LayerMask targetLayers = LayerMask.GetMask("Player","Enemy","Wall","WallSide","DestroyAbleObject","Spawner","Shield");
@@ -1399,11 +1404,10 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
                 // 매니저가 반납했는지 확인(Reset되면 bulletId=0)
                 if (bulletId == 0) return;
 
-                // ✅ 관통 시에도 위치 변경 없이 직선 이동 유지
-                // hitIds로 중복 충돌 방지하므로 위치 조정 불필요
             }
         }
 
+        // 발사자에 따른 충돌 가능 유무 확인
         private bool ShouldHitTarget(GameObject target)
         {
             // 플레이어가 발사한 총알

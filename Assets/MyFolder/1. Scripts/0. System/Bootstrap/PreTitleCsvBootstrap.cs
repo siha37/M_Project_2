@@ -3,7 +3,9 @@ using System.Collections;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using FishNet.Managing.Debugging;
 using MyFolder._1._Scripts._0._System.Data;
+using MyFolder._1._Scripts._3._SingleTone;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -36,8 +38,11 @@ namespace MyFolder._1._Scripts._0._System.Bootstrap
         {
             if (!config) yield break;
 
+            // 데이터 저장위치를 확인
             string dataDir = Path.Combine(Application.persistentDataPath, "Data");
+            // 해당 경로 파일 없을 경우 새로운 파일 생성
             if (!Directory.Exists(dataDir)) Directory.CreateDirectory(dataDir);
+            
             float onstep = 1.0f / config.entries.Count;
             progressBar.fillAmount = 0;
             
@@ -48,12 +53,13 @@ namespace MyFolder._1._Scripts._0._System.Bootstrap
             {
                 if (e == null || string.IsNullOrWhiteSpace(e.key) || string.IsNullOrWhiteSpace(e.url))
                     continue;
-
-                // 강력한 캐시 버스팅: 밀리초 단위 타임스탬프 + 랜덤 값
+                
+                // 현 타임 + 랜덤값 = 버퍼  생성
                 string cacheBuster = GenerateCacheBuster();
+                // 주소에 버퍼라인 추가
                 string urlWithCache = e.url + (e.url.Contains("?") ? "&" : "?") + $"cb={cacheBuster}";
                 
-                Debug.Log($"[{e.key}] 다운로드 시작 (CacheBuster: {cacheBuster})");
+                LogManager.Log(LogCategory.System,$"[{e.key}] 다운로드 시작 (CacheBuster: {cacheBuster})");
 
                 using (var req = UnityWebRequest.Get(urlWithCache))
                 {
@@ -62,17 +68,16 @@ namespace MyFolder._1._Scripts._0._System.Bootstrap
                     req.SetRequestHeader("Pragma", "no-cache");
                     req.SetRequestHeader("Expires", "0");
                     
+                    // 웹에 요청
                     yield return req.SendWebRequest();
-#if UNITY_2020_2_OR_NEWER
+                    
                     if (req.result != UnityWebRequest.Result.Success)
-#else
-                    if (req.isNetworkError || req.isHttpError)
-#endif
                     {
-                        Debug.LogWarning($"CSV download failed: {e.key} {req.error}");
+                        LogManager.LogWarning(LogCategory.System,$"CSV download failed: {e.key} {req.error}");
                         continue;
                     }
-
+                    
+                    // 다운로드 정보 획득
                     var csv = req.downloadHandler.text;
                     
                     // 파일 해시 기반 변경 감지로 실제 수정 시간 추적
@@ -83,15 +88,20 @@ namespace MyFolder._1._Scripts._0._System.Bootstrap
                     versionInfo.AppendLine(coloredLine);
                     
                     int headerIndex = e.headerLineIndex;
+                    //Json 으로 전환
                     var json = CsvToJson.Convert(csv, headerIndex);
 
+                    // 파일명 설정
                     var fileName = string.IsNullOrEmpty(e.fileName)
                         ? (e.key + ".json")
                         : (e.fileName.EndsWith(".json") ? e.fileName : e.fileName + ".json");
+                    // 주소 설정
                     var path = Path.Combine(dataDir, fileName);
+                    
                     var tmp = path + ".tmp";
                     try
                     {
+                        //파일 작성 및 이동
                         File.WriteAllText(tmp, json);
                         if (File.Exists(path)) File.Delete(path);
                         File.Move(tmp, path);

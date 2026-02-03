@@ -186,10 +186,9 @@ namespace MyFolder._1._Scripts._0._Object._1._Spawner
         private void SpawnEnemy()
         {
             if (!IsServerInitialized) return;
-
-            
+          
             Log("적 오브젝트 생성");
-            // ✅ FishNet 올바른 방식: Instantiate 후 NetworkManager를 통해 스폰
+            // FishNet 올바른 방식: Instantiate 후 NetworkManager를 통해 스폰
             TryRandomPointInCircleXY(
                 transform.position,
                 SpawnRadius,
@@ -206,27 +205,29 @@ namespace MyFolder._1._Scripts._0._Object._1._Spawner
                 return;
             }
 
-            // ✅ FishNet 내장 풀링 사용
+            // FishNet 내장 풀링 사용
             // GetPooledInstantiated: 풀에서 가져오거나 없으면 새로 생성
             NetworkObject networkObject = networkManager.GetPooledInstantiated(enemyPrefab,point,Quaternion.identity, Container, true);
             
             GameObject enemy = networkObject.gameObject;
         
             enemy.TryGetComponent(out EnemyControll controller);
+            // 생성자 정보 등록
             controller.SetNetworkSpawnerObject(this);
             
-            // ✅ Spawn 이후에 데이터 설정 (OnStartServer가 이미 실행된 상태)
+            // Spawn 이후에 데이터 설정 (OnStartServer가 이미 실행된 상태)
             if(enemy.TryGetComponent(out EnemyStatus status))
             {
                 status.SetDataId(targetEnemyDataId);
             }
             
+            // 활성화
             enemy.SetActive(true);
             
-            // ✅ FishNet 스폰 (DespawnType=Pool이면 자동 풀링)
+            // FishNet 스폰 (DespawnType=Pool이면 자동 풀링)
             networkManager.ServerManager.Spawn(networkObject);
             
-            
+            // 생성 수 카운트
             currentSpawnedCount++;
             NetworkEnemyManager.Instance.AddEnemy();
         }

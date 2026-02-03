@@ -4,6 +4,13 @@
 ![C#](https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
+## 프로젝트 영상
+
+### 게임플레이 데모
+[![게임플레이 영상](https://img.youtube.com/vi/HGdqI_D9mH8/maxresdefault.jpg)](https://youtu.be/HGdqI_D9mH8)
+
+---
+
 이 프로젝트는 단순한 기능 구현을 넘어, **멀티플레이어 게임의 복잡한 네트워크 구조를 심층적으로 학습하고 실무적인 개발 경험을 쌓기 위해 진행된 프로젝트**입니다. Unity Gaming Services(UGS)와 FishNet이라는 현대적인 네트워킹 솔루션을 통합하며 발생한 기술적 과제들을 해결하고, 확장 가능한 시스템 설계를 시도했습니다.
 
 ## 학습 목표 및 시도 (Learning & Experience)
