@@ -35,7 +35,10 @@
 - **Object Pooling**: 대규모 네트워크 환경에서 GC(Garbage Collector) 부하를 줄이기 위한 풀링 기법을 적용했습니다. NetworkObject의 경우 FishNet 전용 Object Polling을 이용했습니다.
 
 ### 3. Python을 통한 서버 구축 시도
-- 자신의 컴퓨터를 메인 서버로 사용하여 Lobby 연결 처리를 해주는 서버를 구축했습니다. 이후 유지보수와 보안성이 우려되어 UGS의 Lobby, Relay 서비스를 이용했습니다.
+- 자신의 컴퓨터를 메인 서버로 사용하여 Lobby 중계용 서버를 구축했습니다.
+- 지속 개발 중 Relay 기능의 부재로 Lobby 중계 서버에 Relay 기능 추가를 시도 했지만 
+  DDos 같은 보안 문제, 지연 문제 우려, 기존 TCP 방식에서 UDP로의 구조 변경 필요성으로 인해
+  UGS Lobby, Relay 기능을 사용했습니다.
 
 
 ## 프로젝트 구조
