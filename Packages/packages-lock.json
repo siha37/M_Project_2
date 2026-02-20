@@ -273,7 +273,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.memoryprofiler": {
-      "version": "1.1.9",
+      "version": "1.1.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -304,7 +304,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer.playmode": {
-      "version": "1.6.2",
+      "version": "1.6.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -313,7 +313,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer.tools": {
-      "version": "2.2.6",
+      "version": "2.2.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {

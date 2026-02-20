@@ -339,7 +339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -35.849976, y: 37}
+  m_AnchoredPosition: {x: -35.850098, y: 37}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &501372160
@@ -1153,8 +1153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firestoreCollection: bugReports
   maxLogLines: 100
-  autoCaptureScreenshot: 1
-  screenshotScale: 1
   cooldownSeconds: 60
   dailyLimit: 10
   showDebugLogs: 1

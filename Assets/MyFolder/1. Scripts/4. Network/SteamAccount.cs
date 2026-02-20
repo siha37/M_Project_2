@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using MyFolder._1._Scripts._9._Vivox;
 using Steamworks;
@@ -35,8 +35,15 @@ namespace MyFolder._1._Scripts._4._Network
                 if (UnityServices.State == ServicesInitializationState.Uninitialized)
                 {
                     Debug.Log("Unity Services 초기화 시작...");
-                    await UnityServices.InitializeAsync();
-                    Debug.Log("Unity Services 초기화 완료");
+
+                    InitializationOptions options = new InitializationOptions();
+
+                    // GUID 생성 후 하이픈 제거하고 30자로 제한
+                    string uniqueProfile = Guid.NewGuid().ToString("N").Substring(0, 30);
+                    options.SetProfile(uniqueProfile);
+                    
+                    await UnityServices.InitializeAsync(options);
+                    Debug.Log($"Unity Services 초기화 완료 - 프로필: {uniqueProfile}");
                 }
                 else
                 {
