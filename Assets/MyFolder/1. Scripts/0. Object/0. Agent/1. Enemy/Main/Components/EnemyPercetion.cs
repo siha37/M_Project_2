@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using FishNet.Object;
-using FishNet.Object.Helping;
 using MyFolder._1._Scripts._0._Object._0._Agent._0._Player;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Data;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components.Interface;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.States;
 using MyFolder._1._Scripts._3._SingleTone;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
 {
@@ -15,6 +11,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
     {
         private EnemyConfig config;
         private EnemyControll agent;
+        private EnemyMovement movement;
         private bool hasLineOfSight;
         private Vector3 lastSeenPosition;
         private float aiUpdateInterval;
@@ -27,7 +24,8 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         private bool cachedLineOfSight;
         private bool retargeting_Able = true;
         private float retargeting_Cooltime = 4; 
-        private float retargeting_Currnt_Cooltime = 0; 
+        private float retargeting_Currnt_Cooltime = 0;
+        private Vector2 lastFacingDirection = Vector2.right;
         
         public bool HasLineOfSight => hasLineOfSight;
         public Vector3 LastSeenPosition => lastSeenPosition;
@@ -36,6 +34,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         {
             this.agent = agent;
             config = agent.Config;
+            movement = (EnemyMovement)agent.GetEnemyAllComponent(typeof(EnemyMovement));
             
             aiUpdateInterval = agent.Config.aiUpdateInterval;
             currentUpdateInterval = aiUpdateInterval;
@@ -71,6 +70,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
             hasLineOfSight = false;
             lastSeenPosition = Vector3.zero;
             cachedLineOfSight = false;
+            lastFacingDirection = Vector2.right;
     
             // 업데이트 시간 분산 재설정
             lastUpdateTime = Time.time + Random.Range(0f, currentUpdateInterval);
@@ -190,34 +190,12 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         }
 
         /// <summary>
-        /// 공격 가능 거리 판단
+        /// 공격 가능 거리 판단 (결과만 내부에 저장, BT의 Blackboard가 읽어감)
         /// </summary>
         private void UpdateAttackRange()
         {
-            if (hasLineOfSight)
-            {
-                if (!agent.CurrentTarget)
-                {
-                    agent.StateMachine.StateChange(typeof(EnemyPatrolState));
-                    return;
-                }
-                float distance = Vector2.Distance(agent.CurrentTarget.transform.position, agent.transform.position);
-                if (distance <= agent.Status.EnemyData.attackRange)
-                {
-                    agent.StateMachine.StateChange(typeof(EnemyAttackState));
-                }
-                else
-                {
-                    agent.StateMachine.StateChange(typeof(EnemyMoveState));   
-                }
-            }
-            else
-            {
-                if(agent.CurrentTarget)
-                    agent.StateMachine.StateChange(typeof(EnemyMoveState));
-                else
-                    agent.StateMachine.StateChange(typeof(EnemyPatrolState));
-            }
+            // BT가 Blackboard(HasLineOfSight, DistanceToTarget 등)를 통해 의사결정하므로
+            // 여기서는 추가 상태 전환 로직 없이, Perception 값만 유지한다.
         }
 
         private void UpdatePlayerAliveCheck()
@@ -241,11 +219,9 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
 
         private GameObject FindTarget()
         {
-            // 퀘스트 적/기본 적 분기
             GameObject target = null;
             if (agent.IsQuestEnemy)
             {
-                // 방어형일 경우 방어 목표 우선
                 if (agent.QuestType == MyFolder._1._Scripts._6._GlobalQuest.GlobalQuestType.Defense && agent.DefencePriorityTarget)
                 {
                     target = agent.DefencePriorityTarget.gameObject;
@@ -260,13 +236,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
                 target = EnemyTargetManager.Instance.GetClosestNonQuestingPlayer(agent.transform.position);
             }
 
-            if (target)
-            {
-                agent.StateMachine.StateChange(typeof(EnemyMoveState));
-                return target;
-            }
-
-            return null;
+            return target;
         }
         
         /// <summary>
@@ -290,22 +260,21 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         
         /// <summary>
         /// 특정 위치가 시야각 내에 있는지 확인
+        /// 기준 방향: 적의 실제 이동 방향 (정지 시 마지막 이동 방향 유지)
         /// </summary>
         private bool IsInFieldOfView(Vector3 position)
         {
             Vector2 directionToTarget = ((Vector2)position - (Vector2)agent.transform.position).normalized;
         
-            // 현재 타겟이 있으면 타겟 방향을 기준으로, 없으면 기본 방향 사용
             Vector2 baseDirection;
-            if (agent.CurrentTarget)
+            if (movement != null && ((Vector2)movement.moveDirection).sqrMagnitude > 0.01f)
             {
-                // 현재 타겟 방향을 기준으로 설정
-                baseDirection = ((Vector2)agent.CurrentTarget.transform.position - (Vector2)agent.transform.position).normalized;
+                baseDirection = ((Vector2)movement.moveDirection).normalized;
+                lastFacingDirection = baseDirection;
             }
             else
             {
-                // 기본 방향 (오른쪽)
-                baseDirection = Vector2.right;
+                baseDirection = lastFacingDirection;
             }
         
             float angle = Vector2.Angle(baseDirection, directionToTarget);

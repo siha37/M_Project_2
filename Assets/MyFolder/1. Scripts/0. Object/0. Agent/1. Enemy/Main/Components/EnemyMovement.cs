@@ -19,6 +19,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         
         // Control
         public bool OnMove = false;
+        public bool ManualControl = false;
         
         // Timing
         private float lastPathUpdateTime;
@@ -71,6 +72,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         public void Reset()
         {
             OnMove = false;
+            ManualControl = false;
             lastPathUpdateTime = 0;
             pathUpdateInterval = agent.Config.aiUpdateInterval;
             
@@ -90,9 +92,12 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         public void StatInit_DataWait()
         {
             if (!agent) return;
-            
-            SetSpeed(this.agent.Status.EnemyData.speed);
-            SetStoppingDistance(this.agent.Status.EnemyData.stoppingDistance);
+
+            if (!ManualControl)
+            {
+                SetSpeed(this.agent.Status.EnemyData.speed);
+                SetStoppingDistance(this.agent.Status.EnemyData.stoppingDistance);
+            }
             
             lastPathUpdateTime = Time.time + Random.Range(0f, agent.Config.aiUpdateInterval * 0.5f);
             pathUpdateInterval = agent.Config.aiUpdateInterval;
@@ -106,7 +111,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         {
             if (navMeshAgent && navMeshAgent.hasPath)
                 moveDirection = navMeshAgent.velocity;
-            if (OnMove && agent.CurrentTarget && Time.time - lastPathUpdateTime >= pathUpdateInterval)
+            if (OnMove && !ManualControl && agent.CurrentTarget && Time.time - lastPathUpdateTime >= pathUpdateInterval)
             {
                 MoveTo(agent.CurrentTarget.transform.position);
                 lastPathUpdateTime = Time.time;
@@ -141,13 +146,11 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components
         {
             if (!NavMesh.SamplePosition(agentTf.position, out NavMeshHit currentHit, navMeshAgent.height * 2f, NavMesh.AllAreas))
             {
-                // NavMesh를 벗어났으면 가장 가까운 NavMesh 위치로 보정
                 if (NavMesh.SamplePosition(agentTf.position, out NavMeshHit nearestHit, 10f, NavMesh.AllAreas))
                 {
                     agentTf.position = nearestHit.position;
                     
-                    // 경로 재계산
-                    if (OnMove && agent.CurrentTarget)
+                    if (OnMove && !ManualControl && agent.CurrentTarget)
                         MoveTo(agent.CurrentTarget.transform.position);
                 }
             }

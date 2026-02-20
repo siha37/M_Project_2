@@ -12,7 +12,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy
     {   
         [Header("=== 탐지 설정 ===")]
         [Tooltip("적이 플레이어를 탐지할 수 있는 최대 거리")]
-        [SerializeField] protected float DetectionRange = 10f;
+        [SerializeField] protected float DetectionRange = 20f;
     
     
         [Tooltip("시야각 (도)")]

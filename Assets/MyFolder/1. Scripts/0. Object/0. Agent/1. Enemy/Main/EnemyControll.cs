@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 using FishNet.Component.Transforming;
 using FishNet.Object;
+using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.BehaviorTree;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Data;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main.Components.Interface;
@@ -23,7 +25,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
     /// 적 AI 컨트롤러
     /// - FishNet 네트워크 동기화
     /// - 컴포넌트 기반 아키텍처 (Movement, Combat, Perception)
-    /// - 상태 머신 관리
+    /// - Behavior Designer 트리 기반 AI 의사결정
     /// - 오브젝트 풀링 지원 (FishNet 내장)
     /// </summary>
     public class EnemyControll : NetworkBehaviour
@@ -38,6 +40,9 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
         private NetworkQuestEnemySpawner networkQuestEnemySpawner;
         [SerializeField] private SkeletonAnimation skeletonAnimation;
         [SerializeField] private EnemyAnimationSet enemyAnimationSet;
+
+        private BehaviorDesigner.Runtime.BehaviorTree behaviorTree;
+        private EnemyBlackboardUpdater blackboardUpdater;
 
         #endregion
 
@@ -143,8 +148,9 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
             {
                 Init();
                 ClientComponentInit();
-                stateMachine.enabled = false;
-                navagent.enabled = false;
+                if (stateMachine) stateMachine.enabled = false;
+                if (navagent) navagent.enabled = false;
+                if (behaviorTree) behaviorTree.DisableBehavior();
                 transform.rotation = Quaternion.identity;
                 isFirstInitialization = false;
             }
@@ -233,6 +239,11 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
             TryGetComponent(out status);
             TryGetComponent(out networkSync);
             TryGetComponent(out navagent);
+
+            behaviorTree = GetComponent<BehaviorDesigner.Runtime.BehaviorTree>();
+            blackboardUpdater = GetComponent<EnemyBlackboardUpdater>();
+            if (blackboardUpdater == null)
+                blackboardUpdater = gameObject.AddComponent<EnemyBlackboardUpdater>();
         }
 
         /// <summary>
@@ -241,17 +252,8 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
         private void WaitData()
         {
             ComponentInit();
-            EventSub();
-            StateInit();
+            BehaviorTreeInit();
             Status.OnDataRefreshed -= WaitData;
-        }
-
-        /// <summary>
-        /// 이벤트 구독
-        /// </summary>
-        private void EventSub()
-        {
-            stateMachine.StateChangeCallback += StateChage;
         }
 
         #endregion
@@ -342,24 +344,45 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
 
         #endregion
 
-        #region State Management
+        #region Behavior Tree Management
 
         /// <summary>
-        /// 상태 머신 초기화
+        /// Behavior Designer 트리 초기화 및 활성화
         /// </summary>
-        private void StateInit()
+        private void BehaviorTreeInit()
         {
-            StateMachine.Init();
+            if (blackboardUpdater != null)
+                blackboardUpdater.Initialize(this);
+
+            if (behaviorTree != null)
+            {
+                behaviorTree.EnableBehavior();
+                Log("Behavior Tree 활성화 완료");
+            }
         }
 
         /// <summary>
-        /// 상태 변경 시 컴포넌트로 콜백
+        /// Behavior Tree 비활성화
         /// </summary>
-        public void StateChage(IEnemyState oldState, IEnemyState newState)
+        private void BehaviorTreeDisable()
         {
-            foreach (KeyValuePair<Type, IEnemyComponent> component in EnemyComponents)
+            if (behaviorTree != null)
+                behaviorTree.DisableBehavior();
+        }
+
+        /// <summary>
+        /// Behavior Tree 리셋 (풀링 시)
+        /// </summary>
+        private void BehaviorTreeRestart()
+        {
+            if (blackboardUpdater)
+                blackboardUpdater.ResetBlackboard();
+
+            if (behaviorTree)
             {
-                component.Value.ChangedState(oldState, newState);
+                behaviorTree.DisableBehavior();
+                behaviorTree.EnableBehavior();
+                Log("Behavior Tree 리셋 완료");
             }
         }
 
@@ -394,6 +417,8 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
         {
             currentTarget = target;
             EnemyMovement movement = (EnemyMovement)GetEnemyAllComponent(typeof(EnemyMovement));
+
+            if (movement == null) return;
 
             if (currentTarget)
                 movement.Resume();
@@ -490,31 +515,31 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
             // 1. 이벤트 정리 (중복 구독 방지)
             CleanupEvents();
             
-             // ✅ NetworkTransform 재활성화
+            // NetworkTransform 재활성화
             if (TryGetComponent<FishNet.Component.Transforming.NetworkTransform>(out var networkTransform))
             {
                 networkTransform.enabled = true;
             }
             
-            // 7. 이벤트 재구독 (데이터 로드 완료 대기용)
-            EventSub();
+            // 이벤트 재구독 (데이터 로드 완료 대기용)
             if (status)
             {
-                // 데이터 로드 완료 시 NetworkSync와 UI 초기화
                 status.OnDataRefreshed += OnPoolReuseDataRefreshed;
             }
 
-            // 8. NetworkSync는 데이터 로드 완료 후 초기화 (OnPoolReuseDataRefreshed에서 처리)
+            // NetworkSync는 데이터 로드 완료 후 초기화 (OnPoolReuseDataRefreshed에서 처리)
             status.ForceReloadData();
             
-            
-            // 6. Status 재초기화
+            // Status 재초기화
             if (status)
             {
-                status.ResetStatus(); // ✅ 5단계: 구현 완료
+                status.ResetStatus();
             }
             
             networkSync.ResetSync();
+
+            // Behavior Tree 리셋
+            BehaviorTreeRestart();
             
             Log("풀에서 재사용 - 기본 초기화 완료 (데이터 로드 대기 중)");
         }
@@ -532,17 +557,18 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
             questType = default;
             defencePriorityTarget = null;
             
-            // 1. 이벤트 구독 해제
+            // 이벤트 구독 해제
             CleanupEvents();
 
-            
-            // 4. 타겟 제거
+            // Behavior Tree 비활성화
+            BehaviorTreeDisable();
+
+            // 타겟 제거
             currentTarget = null;
             
             networkSync.DieResetSync();
 
-            
-            // ✅ 3. NetworkTransform 비활성화 (씬 전환 시 NullReference 방지)
+            // NetworkTransform 비활성화
             if (TryGetComponent<FishNet.Component.Transforming.NetworkTransform>(out var networkTransform))
             {
                 networkTransform.enabled = false;
@@ -565,12 +591,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
                 catch { }
             }
 
-            // StateMachine 이벤트
-            if (stateMachine)
-            {
-                try { stateMachine.StateChangeCallback -= StateChage; }
-                catch { }
-            }
+            // StateMachine 이벤트 (BT 전환으로 미사용, 하위 호환성 유지)
 
             // QuestSpawner 이벤트
             if (networkQuestEnemySpawner)
@@ -688,8 +709,11 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main
                 string info = $"NavMesh 목적지\n" +
                               $"거리: {distance:F1}m\n" +
                               $"남은거리: {navagent.remainingDistance:F1}m\n" +
-                              $"속도: {navagent.velocity.magnitude:F1}m/s\n" +
+                              $"현재속도: {navagent.velocity.magnitude:F1}m/s\n" +
+                              $"최대속도: {navagent.speed:F1}\n" +
+                              $"가속도: {navagent.acceleration:F1}\n" +
                               $"정지거리: {navagent.stoppingDistance:F1}m\n" +
+                              $"pathStatus: {navagent.pathStatus}\n" +
                               $"isStopped: {navagent.isStopped}\n" +
                               $"pathPending: {navagent.pathPending}";
 

@@ -231,7 +231,7 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 383198630408218422}
   _networkObjectCache: {fileID: 383198630408218422}
-  enemyPrefab: {fileID: 7989332457473997606, guid: 44ccc6cf08ddc344ab5c11676183ddbf, type: 3}
+  enemyPrefab: {fileID: 7989332457473997606, guid: 491443add689d0f4994ca94dc673c00c, type: 3}
   spawnInterval: 1
   spawnDelay: 1
   maxSpawnCount: 80
