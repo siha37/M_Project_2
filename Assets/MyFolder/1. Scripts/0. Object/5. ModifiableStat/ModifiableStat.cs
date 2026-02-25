@@ -34,7 +34,7 @@ namespace MyFolder._1._Scripts._0._Object._5._ModifiableStat
         public void RemoveModifier(string id)
         {
             _modifiers.RemoveAll(m => m.id == id);
-            _currentvalue = _baseValue;
+            CalculateValue();
         }
 
         public void ClearModifiers()
