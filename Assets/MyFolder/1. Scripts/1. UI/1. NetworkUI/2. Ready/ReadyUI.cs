@@ -14,7 +14,7 @@ namespace MyFolder._1._Scripts._1._UI._1._NetworkUI._2._Ready
         [SerializeField] private TextMeshProUGUI playerCountText;
 
         [SerializeField] private TextMeshProUGUI CurrentCharacterNameText;
-        [SerializeField] private List<Button> Character_buttons;
+        [SerializeField] private List<Toggle> Character_buttons;
         
         [SerializeField] private Button DisconnectButton;
         void Start()
@@ -56,13 +56,12 @@ namespace MyFolder._1._Scripts._1._UI._1._NetworkUI._2._Ready
         private void OnClick_CharacterButton_Setting()
         {
             ushort id = 1;
-            if (GameDataManager.Instance)
-                CurrentCharacterNameText.text = GameDataManager.Instance.GetPlayerDataById(1).name;
-            foreach (Button button in Character_buttons)
+            
+            foreach (Toggle toggle in Character_buttons)
             {
                 var id1 = id;
-                button.onClick.AddListener(() => { SetPlayerDataId(id1); });
-                button.transform.GetChild(1).TryGetComponent(out TextMeshProUGUI text);
+                toggle.onValueChanged.AddListener((b) => { SetPlayerDataId(id1,b); });
+                toggle.transform.GetChild(1).TryGetComponent(out TextMeshProUGUI text);
                 if(GameDataManager.Instance)
                 {
                     text.text = GameDataManager.Instance.GetPlayerDataById(id1).name;
@@ -74,16 +73,14 @@ namespace MyFolder._1._Scripts._1._UI._1._NetworkUI._2._Ready
         /// <summary>
         /// 오너의 data index 변경
         /// </summary>
-        public void SetPlayerDataId(ushort playerDataId)
+        public void SetPlayerDataId(ushort playerDataId,bool b)
         {
+            if(!b) return;
             if (InstanceFinder.NetworkManager?.ClientManager && PlayerSettingManager.Instance && PlayerSettingManager.Instance.IsSettingsReady)
             {
                 LogManager.Log(LogCategory.Player,"Data Id Changed",this);
                 int clientid = InstanceFinder.NetworkManager.ClientManager.Connection.ClientId;
                 PlayerSettingManager.Instance.SetPlayerDataIdServerRpc(clientid,playerDataId);
-                
-                if (GameDataManager.Instance)
-                    CurrentCharacterNameText.text = GameDataManager.Instance.GetPlayerDataById(playerDataId).name;
             }
             else
             {
