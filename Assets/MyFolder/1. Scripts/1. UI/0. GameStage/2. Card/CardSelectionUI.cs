@@ -5,6 +5,7 @@ using MoreMountains.Feedbacks;
 using MyFolder._1._Scripts._11._Feel;
 using MyFolder._1._Scripts._3._SingleTone;
 using MyFolder._1._Scripts._6._GlobalQuest._3._Card;
+using MyFolder._1._Scripts._13._Card;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -31,7 +32,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         private class CardSelectionRequest
         {
             public bool isReward;
-            public List<QuestCardManager.RewardCardInstance> rewardCards;
+            public List<RewardManager.RewardCardInstance> rewardCards;
             public List<QuestCardManager.DefeatCardInstance> defeatCards;
             public Action<int> callback;
         }
@@ -57,7 +58,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         [SerializeField] private float displayDuration = 30f; // 카드 선택 제한 시간
         
         // 현재 선택 상태
-        private List<QuestCardManager.RewardCardInstance> currentRewardCards;
+        private List<RewardManager.RewardCardInstance> currentRewardCards;
         private List<QuestCardManager.DefeatCardInstance> currentDefeatCards;
         private int selectedCardIndex = -1;
         private bool isRewardSelection = true;
@@ -65,6 +66,9 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         public Action CardSelect;
         public Action CardSwich;
         private float selectionStartTime;
+
+        // 시간 제한 기능 활성화 플래그
+        private bool TimeOutActive = false;
         
         public static CardSelectionUI Instance { get; private set; }
         
@@ -147,7 +151,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         /// <summary>
         /// 보상 카드 선택 UI 표시 (큐 적용)
         /// </summary>
-        public void ShowRewardCards(List<QuestCardManager.RewardCardInstance> rewardCards, Action<int> onSelected = null)
+        public void ShowRewardCards(List<RewardManager.RewardCardInstance> rewardCards, Action<int> onSelected = null)
         {
             var request = new CardSelectionRequest
             {
@@ -157,7 +161,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
                 callback = onSelected
             };
     
-            if (isShowingCard)
+            if (isShowingCard || pendingSelections.Count != 0)
             {
                 // 이미 표시 중이면 큐에 추가
                 pendingSelections.Enqueue(request);
@@ -183,7 +187,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
                 callback = onSelected
             };
     
-            if (isShowingCard)
+            if (isShowingCard || pendingSelections.Count != 0)
             {
                 // 이미 표시 중이면 큐에 추가
                 pendingSelections.Enqueue(request);
@@ -202,11 +206,12 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         private void ShowCardImmediate(CardSelectionRequest request)
         {
             isShowingCard = true;
-    
             
             selectedCardIndex = -1;
             selectionStartTime = Time.time;
+            TimeOutActive = false;
             TimeOut.gameObject.SetActive(true);
+            // 한 번에 하나의 요청만 처리하므로 할당(=). += 시 큐 연속 표시 시 핸들러가 누적됨
             onCardSelected = WrapCallback(request.callback);
             
             if (request.isReward)
@@ -245,14 +250,18 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         
                 // 완료 처리
                 isShowingCard = false;
-        
-                // 대기 중인 요청이 있으면 다음 표시
-                if (pendingSelections.Count > 0)
-                {
-                    var nextRequest = pendingSelections.Dequeue();
-                    ShowCardImmediate(nextRequest);
-                }
+
             };
+        }
+
+        public void NextRequest()
+        {
+            // 대기 중인 요청이 있으면 다음 표시
+            if (pendingSelections.Count > 0)
+            {
+                var nextRequest = pendingSelections.Dequeue();
+                ShowCardImmediate(nextRequest);
+            }
         }
         /// <summary>
         /// 카드 선택 패널 표시
@@ -260,7 +269,12 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         private void ShowSelectionPanel(string title, string description)
         {
             if (cardSelectionPanel)
+            {
                 cardSelectionPanel.SetActive(true);
+                cardSelectionPanel.TryGetComponent(out Animator anim);
+                anim.SetTrigger("Reset");
+            }
+                
                 
             if (titleText)
                 titleText.text = title;
@@ -276,7 +290,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
                 for (int i = 0; i < cardSlots.Length && i < currentRewardCards.Count; i++)
                 {
                     var card = currentRewardCards[i];
-                    UpdateCardUI(i, card.baseData.cardName, card.baseData.description, 
+                    UpdateCardUI(i, card.baseData.cardName, card.baseData.description,
                         $"{card.rewardType}: {card.actualPercentage:F1}%", true);
                 }
                 
@@ -406,7 +420,8 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         {
             currentRewardCards = null;
             currentDefeatCards = null;
-            onCardSelected = null;
+            if (!isShowingCard)
+                onCardSelected = null;
             selectedCardIndex = -1;
         }
         
@@ -415,14 +430,14 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         /// </summary>
         private void Update()
         {
-            if (cardSelectionPanel && cardSelectionPanel.activeSelf)
+            if (cardSelectionPanel && cardSelectionPanel.activeSelf && !TimeOutActive)
             {
                 float elapsedTime = Time.time - selectionStartTime;
                 if (elapsedTime >= displayDuration)
                 {
+                    TimeOutActive = true;
                     int cardCount = isRewardSelection ? (currentRewardCards?.Count ?? 0) : (currentDefeatCards?.Count ?? 0);
                     // 시간 초과 - 자동으로 랜덤 선택
-                    // 자동으로 첫 번째 카드 선택
                     selectedCardIndex = Random.Range(0, cardCount);
                     // 카드 확정
                     cardSelectionAnimator.SetInteger(SelectCard, selectedCardIndex+1);

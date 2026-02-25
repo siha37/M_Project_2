@@ -15,7 +15,9 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
         [SerializeField] private IntractArea interactArea;
         private GameObject currentInteractableObject;
         private Coroutine reviveCoroutine;
-        public bool isActive =false;
+        private Coroutine holdCoroutine;
+        public bool isActive = false;
+
         private void Start()
         {
             if (!interactArea)
@@ -39,7 +41,6 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
                 return;
             }
 
-            
             ConnectEvent();
         }
 
@@ -52,6 +53,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
         {
             DisconnectEvent();
         }
+
         private void OnDestroy()
         {
             DisconnectEvent();
@@ -59,7 +61,6 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 
         private void ConnectEvent()
         {
-            // 이벤트 연결 해제
             if (context.Input)
             {
                 context.Input.interactStartCallback += OnInteractStart;
@@ -71,7 +72,6 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 
         private void DisconnectEvent()
         {
-            // 이벤트 연결 해제
             if (context.Input)
             {
                 context.Input.interactStartCallback -= OnInteractStart;
@@ -80,44 +80,95 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
                 context.Status.OnReviveAbleDeathEvent -= OnInteractCanceled;
             }
         }
-        
+
         private void OnInteractStart()
         {
-            if (context.Component.GetPComponent<PlayerHealComponent>() is PlayerHealComponent HEAL)
+            // 이미 상호작용 중이면 새로운 상호작용 불가
+            if (isActive) return;
+
+            if (context.Component.GetPComponent<PlayerHealComponent>() is PlayerHealComponent heal)
             {
-                if(HEAL.headling)
-                    return;
+                if (heal.headling) return;
             }
-            // 가장 가까운 상호작용 가능한 오브젝트 찾기
+
             currentInteractableObject = interactArea.GetNearestObject();
-            
+
             if (currentInteractableObject)
             {
-                if (currentInteractableObject.CompareTag("Object"))
+                if (currentInteractableObject.CompareTag("InteractableObj"))
                 {
-                    // Object와 상호작용
+                    // 홀드 상호작용 우선 확인
+                    IHoldInteractable holdInteractable;
+                    if (currentInteractableObject.TryGetComponent(out holdInteractable))
+                    {
+                        holdCoroutine = StartCoroutine(HoldInteractionRoutine(holdInteractable));
+                        return;
+                    }
+
+                    // 일반 즉시 상호작용
                     IInteractable interactable = currentInteractableObject.GetComponent<IInteractable>();
                     interactable?.Interact(gameObject);
                 }
                 else if (currentInteractableObject.CompareTag("Player"))
                 {
-                    // Player의 상태 확인
                     PlayerNetworkSync playerSync = currentInteractableObject.GetComponent<PlayerNetworkSync>();
                     if (playerSync && playerSync.IsDead())
                     {
-                        // 이전 부활 코루틴이 있다면 중지
                         if (reviveCoroutine != null)
-                        {
                             StopCoroutine(reviveCoroutine);
-                        }
-                        // 새로운 부활 처리 시작
                         reviveCoroutine = StartCoroutine(RevivePlayerNetwork(playerSync));
                     }
                 }
             }
         }
 
-    
+        private IEnumerator HoldInteractionRoutine(IHoldInteractable target)
+        {
+            float elapsed = 0f;
+            float duration = target.HoldDuration;
+
+            target.StartHold(gameObject);
+            context.AgentUI.StartRewardHoldProgress();
+            context.Controller.IsMovable = false;
+            context.Controller.MoveStop();
+            isActive = true;
+            context.Shooter.OnAttack = false;
+
+            while (elapsed < duration)
+            {
+                // 대상이 사라지거나 범위를 벗어나면 취소
+                if (!currentInteractableObject || !interactArea.GetInteractableList().Contains(currentInteractableObject))
+                {
+                    CancelHold(target);
+                    yield break;
+                }
+
+                elapsed += Time.deltaTime;
+                float progress = elapsed / duration;
+                context.AgentUI.UpdateRewardHoldProgress(progress);
+                yield return null;
+            }
+
+            context.Controller.IsMovable = true;
+            context.Shooter.OnAttack = true;
+            context.AgentUI.EndRewardHoldProgress();
+            isActive = false;
+            holdCoroutine = null;
+
+            target.CompleteHold(gameObject);
+        }
+
+        private void CancelHold(IHoldInteractable target)
+        {
+            context.Controller.IsMovable = true;
+            context.Shooter.OnAttack = true;
+            context.AgentUI.EndRewardHoldProgress();
+            isActive = false;
+            holdCoroutine = null;
+
+            target.CancelHold(gameObject);
+        }
+
         private IEnumerator RevivePlayerNetwork(PlayerNetworkSync targetNetworkSync)
         {
             float elapsedTime = 0f;
@@ -127,6 +178,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
             context.Controller.MoveStop();
             isActive = true;
             context.Shooter.OnAttack = false;
+
             while (elapsedTime < PlayerStatus.reviveDelay)
             {
                 elapsedTime += Time.deltaTime;
@@ -137,7 +189,6 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 
             context.Controller.IsMovable = true;
             context.Shooter.OnAttack = true;
-            // 네트워크 동기화된 부활 처리
             targetNetworkSync.RequestRevive();
             context.Sync.OnRevivedEnd();
             context.AgentUI.EndReviveProgress();
@@ -147,17 +198,34 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 
         private void OnInteractPerformed()
         {
-            // 상호작용 수행 중 처리
         }
 
         private void OnInteractCanceled()
         {
-            // 상호작용 취소 시 처리
+            if (holdCoroutine != null)
+            {
+                IHoldInteractable holdInteractable = currentInteractableObject
+                    ? currentInteractableObject.GetComponent<IHoldInteractable>()
+                    : null;
+
+                StopCoroutine(holdCoroutine);
+                if (holdInteractable != null)
+                    CancelHold(holdInteractable);
+                else
+                {
+                    context.Controller.IsMovable = true;
+                    context.Shooter.OnAttack = true;
+                    context.AgentUI.EndRewardHoldProgress();
+                    isActive = false;
+                    holdCoroutine = null;
+                }
+            }
+
             if (reviveCoroutine != null)
             {
                 context.Controller.IsMovable = true;
                 context.Shooter.OnAttack = true;
-                
+
                 StopCoroutine(reviveCoroutine);
                 context.Sync.OnRevivedEnd();
                 context.AgentUI.EndReviveProgress();
@@ -165,6 +233,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
                 reviveCoroutine = null;
                 context.AgentUI.UpdateReviveProgressIsOwner(0);
             }
+
             currentInteractableObject = null;
         }
     }

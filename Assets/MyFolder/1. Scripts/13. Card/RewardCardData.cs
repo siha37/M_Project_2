@@ -1,8 +1,15 @@
 using System;
 using Newtonsoft.Json;
 
-namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
+namespace MyFolder._1._Scripts._13._Card
 {
+    public enum RewardCardRarity
+    {
+        Normal,
+        Epic,
+        Legend
+    }
+
     [Serializable]
     public class RewardCardData
     {
@@ -45,6 +52,8 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
         public float reloadTimeMinPercentage;
         public float reloadTimeMaxPercentage;
         
+        public RewardCardRarity rarity;
+        
         // 기본 생성자
         public RewardCardData()
         {
@@ -56,6 +65,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
             [JsonProperty("CardId")] ushort cardId,
             [JsonProperty("CardName")] string cardName,
             [JsonProperty("Description")] string description,
+            [JsonProperty("Rarity")] RewardCardRarity rarity,
             [JsonProperty("BulletSpeedMinPercentage")] float bulletSpeedMinPercentage,
             [JsonProperty("BulletSpeedMaxPercentage")] float bulletSpeedMaxPercentage,
             [JsonProperty("BulletDamageMinPercentage")] float bulletDamageMinPercentage,
@@ -78,6 +88,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
             this.cardId = cardId;
             this.cardName = cardName;
             this.description = description;
+            this.rarity = rarity;
             this.bulletSpeedMinPercentage = bulletSpeedMinPercentage;
             this.bulletSpeedMaxPercentage = bulletSpeedMaxPercentage;
             this.bulletDamageMinPercentage = bulletDamageMinPercentage;

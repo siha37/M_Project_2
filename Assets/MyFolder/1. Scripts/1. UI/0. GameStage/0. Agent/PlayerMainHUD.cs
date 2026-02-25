@@ -159,6 +159,19 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._0._Agent
         {
             playerProgressControl.ProgressUpdate(reloadProgress);
         }
+
+        public void OnRewardHoldProgress()
+        {
+            playerProgressControl.ProgressStart("보상 획득 중...");
+        }
+        public void OffRewardHoldProgress()
+        {
+            playerProgressControl.ProgressEnd();
+        }
+        public void UpdateRewardHoldProgress(float progress)
+        {
+            playerProgressControl.ProgressUpdate(progress);
+        }
         
         public void UpdateCamouflageCooldownUI(float currty ,float camouflageCooldown)
         {

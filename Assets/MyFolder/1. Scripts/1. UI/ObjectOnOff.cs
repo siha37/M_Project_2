@@ -11,7 +11,6 @@ namespace MyFolder._1._Scripts._1._UI
 
         public void ObjectOff()
         {
-            
             gameObject.SetActive(false);
         }
     }

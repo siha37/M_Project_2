@@ -14,12 +14,6 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
             cardSelectionUI.AnimIndex_Reset();
         }
 
-        private void OnDisable()
-        {
-            foreach(var cardMaterialController in cardMaterialControllers)
-                cardMaterialController.CardDissolveReset();
-        }
-
         public void DissolveOnTrigger(int index)
         {
             cardMaterialControllers[index-1].CardDissolveStart();
@@ -28,6 +22,14 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         public void DissolveOffTrigger(int index)
         {
             cardMaterialControllers[index-1].CardDissolveEnd();
+        }
+
+        public void NextRequest()
+        {
+            foreach(var cardMaterialController in cardMaterialControllers)
+                cardMaterialController.CardDissolveReset();
+            
+            cardSelectionUI.NextRequest();
         }
     }
 }

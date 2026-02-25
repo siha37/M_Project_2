@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FishNet;
 using FishNet.Managing.Client;
 using MyFolder._1._Scripts._1._UI._3._Cursor;
@@ -211,6 +211,24 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._0._Agent
         {
             if (playerMainHUD)
                 playerMainHUD.UpdateReviveAmount(reviveAmount);
+        }
+
+        public void StartRewardHoldProgress()
+        {
+            if (playerMainHUD)
+                playerMainHUD.OnRewardHoldProgress();
+        }
+
+        public void EndRewardHoldProgress()
+        {
+            if (playerMainHUD)
+                playerMainHUD.OffRewardHoldProgress();
+        }
+
+        public void UpdateRewardHoldProgress(float progress)
+        {
+            if (playerMainHUD)
+                playerMainHUD.UpdateRewardHoldProgress(progress);
         }
     }
 }

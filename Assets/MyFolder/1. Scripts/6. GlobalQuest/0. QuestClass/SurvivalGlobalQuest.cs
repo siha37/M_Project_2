@@ -75,13 +75,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._0._QuestClass
             
             point.QuestEnd();
             spawner.AllRemove();
-            
-            // 퀘스트 카드 시스템 연동
-            if (questData != null && QuestCardManager.Instance)
-            {
-                QuestCardManager.Instance.HandleQuestSuccess(questData);
-            }
-            
+            // 퀘스트 카드 시스템 연동 (기존 보상 카드 시스템용 주석)
             IsEnd = true;
         }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FishNet.Object;
@@ -9,6 +9,7 @@ using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy;
 using MyFolder._1._Scripts._0._Object._4._Shooting;
 using MyFolder._1._Scripts._6._GlobalQuest._2._Data;
 using MyFolder._1._Scripts._6._GlobalQuest._3._Card;
+using MyFolder._1._Scripts._13._Card;
 using MyFolder._1._Scripts._7._PlayerRole;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -786,6 +787,12 @@ namespace MyFolder._1._Scripts._3._SingleTone
         public DefeatCardData GetDefeatCardsByType(ushort cardId)
         {
             return cachedDefeatCards.GetValueOrDefault(cardId);
+        }
+
+        public ushort GetMaxRewardCardId()
+        {
+            if (cachedRewardCards.Count == 0) return 0;
+            return cachedRewardCards.Keys.Max();
         }
         
         public SpawnerData GetSpawnerDataById(ushort id)

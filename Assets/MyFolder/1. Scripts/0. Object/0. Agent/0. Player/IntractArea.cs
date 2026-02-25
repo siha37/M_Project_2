@@ -11,7 +11,7 @@ public class IntractArea : MonoBehaviour
         if (transform.parent == other.transform)
             return;
         // Player나 Object 태그를 가진 오브젝트를 리스트에 추가
-        if (other.CompareTag("Player") || other.CompareTag("Object"))
+        if (other.CompareTag("Player") || other.CompareTag("Object") || other.CompareTag("InteractableObj"))
         {
             if (!interactableList.Contains(other.gameObject))
             {
@@ -25,7 +25,7 @@ public class IntractArea : MonoBehaviour
         if (transform.parent == other.transform)
             return;
         // Player나 Object 태그를 가진 오브젝트를 리스트에서 제거
-        if ( other.CompareTag("Player") || other.CompareTag("Object"))
+        if ( other.CompareTag("Player") || other.CompareTag("Object")|| other.CompareTag("InteractableObj"))
         {
             if (interactableList.Contains(other.gameObject))
             {

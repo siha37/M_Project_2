@@ -74,7 +74,8 @@ namespace MyFolder._1._Scripts._11._Feel
 
         public void CardTimeOutFeel_Start()
         {
-            CardTimeOutFeel?.PlayFeedbacks();
+            if(CardTimeOutFeel?.IsPlaying != true)
+                CardTimeOutFeel?.PlayFeedbacks();
         }
 
         public void CardTimeOutFeel_Stop()

@@ -53,13 +53,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._0._QuestClass
             string AlertText = "퀘스트 성공";
             Feel_InGame.Instance.AlertFeel_Start(AlertText);
             point.QuestEnd();
-            
-            // 퀘스트 카드 시스템 연동
-            if (questData != null && QuestCardManager.Instance)
-            {
-                QuestCardManager.Instance.HandleQuestSuccess(questData);
-            }
-            
+            // 퀘스트 카드 시스템 연동 (기존 보상 카드 시스템용 주석)
             IsEnd = true;
         }
 
