@@ -30,3 +30,22 @@
 - Do not commit secrets; keep `Server/config.json` generic or document local overrides.
 - Respect existing `.gitignore` for `Library/`, `Temp/`, `Logs/`, `obj/`.
 - Agents: never modify `Library/`, `Temp/`, or third‑party PackageCache; make focused changes under `Assets/MyFolder/` and `Server/` only.
+
+## Cursor Cloud specific instructions
+
+### Scope
+- **Unity Editor** cannot run in the headless Cloud Agent VM (requires GUI + Unity 6 `6000.0.58f2`). Unity C# code can only be reviewed/edited, not built or tested here.
+- **Python lobby server** (`Server/`) is fully runnable. It uses only Python stdlib — no `requirements.txt` or pip dependencies are needed.
+
+### Running the Python server
+- Start: `python3 Server/main.py` — listens on `0.0.0.0:9122` (configurable via `Server/config.json`).
+- On Linux the `input_monitor` daemon thread will crash with `ModuleNotFoundError: No module named 'msvcrt'`. This is expected and harmless; the main server thread continues normally.
+- The server writes logs to `server.log` in the working directory.
+
+### Lint & Test
+- Lint: `flake8 Server/ --max-line-length=150`
+- Tests (pytest): `pytest -q Server/tests` — the `Server/tests/` directory does not exist yet; create `test_*.py` files there as needed.
+
+### Key caveats
+- The AGENTS.md reference to `pip install -r requirements.txt` is outdated — no such file exists. The server has zero third-party Python dependencies.
+- Kill the server by its specific PID, never with `pkill -f`.
