@@ -4,6 +4,7 @@ using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
 using MyFolder._1._Scripts._0._Object._0._Agent;
+using MyFolder._1._Scripts._0._Object._0._Agent._0._Player._0._Component;
 using MyFolder._1._Scripts._0._Object._0._Agent._0._Player._1._SubObject._0._Shield;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy;
 using MyFolder._1._Scripts._0._Object._0._Agent._1._Enemy.Main;
@@ -11,6 +12,7 @@ using MyFolder._1._Scripts._1._UI._0._GameStage;
 using MyFolder._1._Scripts._10._Sound.Impact;
 using MyFolder._1._Scripts._12._Pool;
 using MyFolder._1._Scripts._3._SingleTone;
+using MyFolder._1._Scripts._7._PlayerRole;
 using MyFolder._1._Scripts._8999._Utility.Corutin;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -1186,6 +1188,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
         public float piercing;
         public uint ownerNetworkId;
         public GameObject ownerGameObject;
+        private NetworkConnection conn;
 
         public Vector3 prevPosition;
         private readonly HashSet<int> hitIds = new HashSet<int>();
@@ -1229,6 +1232,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             this.ownerType = DetermineOwnerType(shooter);
 
             this.ownerGameObject = shooter?.FirstObject.gameObject;
+            conn = shooter;
         }
 
         // 적군 총알 초기화 함수
@@ -1247,6 +1251,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             // 적군은 NetworkConnection 대신 GameObject 참조 저장
             this.ownerNetworkId = 111; // 적군은 NetworkConnection이 없으므로 111
             this.ownerType = BulletOwnerType.Enemy;
+            conn = null;
 
             this.ownerGameObject = enemyObject;
         }
@@ -1334,6 +1339,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             elapsed = 0f;
             ownerNetworkId = 0;
             ownerType = BulletOwnerType.Neutral;
+            conn = null;
             hitIds.Clear();
         }
         
@@ -1386,7 +1392,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
                 if (ownerObject)
                 {
                     if (go == ownerObject) continue;
-                    var shield = go.GetComponent<Shield>();
+                    go.TryGetComponent(out Shield shield);
                     if (shield && shield.context && shield.context.gameObject == ownerObject) continue;
                 }
 
@@ -1398,6 +1404,7 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
 
                 if (!ShouldHitTarget(go)) continue;
 
+                DamageStack_Apply(go);
                 hitIds.Add(id);
                 BulletManager.Instance.OnBulletHit(this, go, h.point);
 
@@ -1455,6 +1462,13 @@ namespace MyFolder._1._Scripts._0._Object._2._Projectile
             }
 
             return false;
+        }
+
+        private void DamageStack_Apply(GameObject target)
+        {
+            if (ownerType != BulletOwnerType.Player || conn == null)
+                return;
+            DamageStackManager.Instance.DamageApply_Request_TargetRPC(conn,target.tag,damage);
         }
         
         #endregion

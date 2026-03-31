@@ -2,28 +2,28 @@
   "data": [
     {
       "TypeId": 1,
-      "Hp": 1000.0,
+      "Hp": 230.0,
       "Speed": 0.0,
       "AttackSpeed": 0.0,
       "ShootingDataID": "0"
     },
     {
       "TypeId": 2,
-      "Hp": 120.0,
+      "Hp": 200.0,
       "Speed": 0.0,
       "AttackSpeed": 0.0,
       "ShootingDataID": "0"
     },
     {
       "TypeId": 3,
-      "Hp": 130.0,
+      "Hp": 200.0,
       "Speed": 0.0,
       "AttackSpeed": 0.0,
       "ShootingDataID": "0"
     },
     {
       "TypeId": 4,
-      "Hp": 140.0,
+      "Hp": 180.0,
       "Speed": 0.0,
       "AttackSpeed": 0.0,
       "ShootingDataID": "0"

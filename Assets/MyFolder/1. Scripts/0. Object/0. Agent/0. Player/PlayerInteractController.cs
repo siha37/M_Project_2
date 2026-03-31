@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FishNet.Object;
 using MyFolder._1._Scripts._0._Object._0._Agent._0._Player._0._Component;
 using MyFolder._1._Scripts._1._UI._0._GameStage._0._Agent;
 using MyFolder._1._Scripts._3._SingleTone;
@@ -9,7 +10,7 @@ using UnityEngine.InputSystem;
 
 namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 {
-    public class PlayerInteractController : MonoBehaviour
+    public class PlayerInteractController : NetworkBehaviour
     {
         [SerializeField] private PlayerContext context;
         [SerializeField] private IntractArea interactArea;
@@ -18,30 +19,19 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
         private Coroutine holdCoroutine;
         public bool isActive = false;
 
-        private void Start()
+        public override void OnStartClient()
         {
-            if (!interactArea)
+            if (IsOwner)
             {
-                LogManager.LogError(LogCategory.Player, $"{gameObject.name} IntractArea 컴포넌트가 없습니다.", this);
-                enabled = false;
-                return;
-            }
+                if (!interactArea || !context.Input || !context.AgentUI)
+                {
+                    LogManager.LogError(LogCategory.Player, $"{gameObject.name} 컴포넌트가 없습니다.", this);
+                    enabled = false;
+                    return;
+                }
 
-            if (!context.Input)
-            {
-                LogManager.LogError(LogCategory.Player, $"{gameObject.name} PlayerInputControll 컴포넌트가 없습니다.", this);
-                enabled = false;
-                return;
+                ConnectEvent();
             }
-
-            if (!context.AgentUI)
-            {
-                LogManager.LogError(LogCategory.Player, $"{gameObject.name} AgentUI 컴포넌트가 없습니다.", this);
-                enabled = false;
-                return;
-            }
-
-            ConnectEvent();
         }
 
         private void OnEnable()
@@ -92,7 +82,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
             }
 
             currentInteractableObject = interactArea.GetNearestObject();
-
+            
             if (currentInteractableObject)
             {
                 if (currentInteractableObject.CompareTag("InteractableObj"))

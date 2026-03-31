@@ -44,7 +44,14 @@ namespace MyFolder._1._Scripts._0._Object._5._ModifiableStat
         }
         private void CalculateValue()
         {
-            CalculateFloatBasedValue();
+            if(typeof(T) == typeof(float))
+            {
+                CalculateFloatBasedValue();
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                CalculateIntBasedValue();
+            }
         }
 
         protected virtual void CalculateFloatBasedValue()
@@ -71,6 +78,21 @@ namespace MyFolder._1._Scripts._0._Object._5._ModifiableStat
 #endif
         }
 
+        protected virtual void CalculateIntBasedValue()
+        {
+            int basevalue = Convert.ToInt32(_baseValue);
+            int added =0;
+            foreach (var modifier in _modifiers)
+            {
+                added += (int)modifier.percentBonus;
+            }
+            double result = basevalue + added;
+            _currentvalue = ConvertAndClamp(result);
+#if UNITY_EDITOR
+            Debug.Log($"변경값:{_currentvalue}");
+#endif
+        }
+        
         protected T ConvertAndClamp(double value)
         {
             if (typeof(T) == typeof(float))

@@ -2,6 +2,7 @@ using System;
 using MyFolder._1._Scripts._9._Vivox;
 using Unity.Services.Vivox;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace MyFolder._1._Scripts._1._UI._1._NetworkUI._2._Ready
@@ -17,14 +18,26 @@ namespace MyFolder._1._Scripts._1._UI._1._NetworkUI._2._Ready
         [SerializeField] private Sprite InputDeviceUnMuteSprite;
         [SerializeField] private Sprite OutputDeviceMuteSprite;
         [SerializeField] private Sprite OutputDeviceUnMuteSprite;
+        
+        [SerializeField] private InputActionReference InputDeviceMute_action; 
+        [SerializeField] private InputActionReference OutputDeviceMute_action; 
 
 
         private void Start()
         {
             InputDeviceMuteButton.onClick.AddListener(InputDeviceMute);
             OutputDeviceMuteButton.onClick.AddListener(OutputDeviceMute);
+
+            InputDeviceMute_action.action.performed += InputDeviceMute;
+            OutputDeviceMute_action.action.performed += OutputDeviceMute;
         }
 
+        private void OnDestroy()
+        {
+            InputDeviceMute_action.action.performed -= InputDeviceMute;
+            OutputDeviceMute_action.action.performed -= OutputDeviceMute;
+        }
+        
         public void InputDeviceMute()
         {
             VivoxManager.Instance.MyInputMute();
@@ -49,6 +62,16 @@ namespace MyFolder._1._Scripts._1._UI._1._NetworkUI._2._Ready
             {
                 OutputDeviceMuteImage.sprite = OutputDeviceUnMuteSprite;
             }
+        }
+
+        private void InputDeviceMute(InputAction.CallbackContext context)
+        {
+            InputDeviceMute();
+        }
+
+        private void OutputDeviceMute(InputAction.CallbackContext context)
+        {
+            OutputDeviceMute();
         }
     }
 }

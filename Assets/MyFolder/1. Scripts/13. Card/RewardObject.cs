@@ -1,3 +1,4 @@
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using MyFolder._1._Scripts._0._Object;
@@ -28,19 +29,21 @@ namespace MyFolder._1._Scripts._13._Card
         // ─── 홀드 상태 (로컬) ────────────────────────────────────
         public float HoldDuration => 5f;
         private GameObject currentInteractor;
+        
+        // ─── UI ─────────────────────────────────────────────────
+        [SerializeField] private GameObject interactionUi;
 
         // ─── FishNet 생명주기 ─────────────────────────────────────
         public override void OnStartClient()
         {
-            base.OnStartClient();
             rarity.OnChange += OnRarityChanged;
             UpdateVfxColor(rarity.Value);
         }
 
         public override void OnStopClient()
         {
-            base.OnStopClient();
             rarity.OnChange -= OnRarityChanged;
+            UpdateVfxColor(rarity.Value);
         }
 
         // ─── 서버 초기화 (Spawner 호출 후 RewardManager가 설정) ──
@@ -49,6 +52,7 @@ namespace MyFolder._1._Scripts._13._Card
             instanceId.Value = id;
             rewardId.Value = rewardCardId;
             rarity.Value = cardRarity;
+            UpdateVfxColor(rarity.Value);
         }
 
         // ─── IHoldInteractable 구현 ───────────────────────────────
@@ -69,7 +73,7 @@ namespace MyFolder._1._Scripts._13._Card
             currentInteractor = null;
 
             if (RewardManager.Instance)
-                RewardManager.Instance.RequestCollectServerRpc(instanceId.Value);
+                RewardManager.Instance.RequestCollectServerRpc(instanceId.Value,NetworkManager.ClientManager.Connection);
         }
 
         // ─── VFX 색상 ─────────────────────────────────────────────
@@ -90,6 +94,11 @@ namespace MyFolder._1._Scripts._13._Card
             };
 
             vfx.SetVector4(vfxColorProperty, color);
+        }
+
+        public void interaction_OnOff(bool isOn)
+        {
+            interactionUi.SetActive(isOn);
         }
     }
 }

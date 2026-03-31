@@ -2,8 +2,9 @@
   "data": [
     {
       "TypeId": 1,
-      "SpawnTime": "2/10/20/30/40",
-      "OneTimeSpawnerAmount": 2,
+      "SpawnTime": "3/100/200/300/400/500/600/700/800/900/1000/1100/1200",
+      "OneTimeSpawnerAmount": 3,
+      "MaxSpawnerAmount": 9,
       "StartEnemyTypeId": 1
     }
   ]

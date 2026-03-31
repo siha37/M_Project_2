@@ -30,6 +30,12 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
         public bool IsMoving => onMove;
         public Vector2 MoveDirection => prevDirection;
         private float Currentyspeed;
+
+        [Header("Camouflage move")]
+        PlayerCamouflageComponent camComp;
+        [SerializeField] private float camouflageTurnSpeedDegPerSec = 180f;
+        private Vector2 camouflageTargetDirection;
+        private bool camouflageSteeringMove;
         public override void OnStartClient()
         {
             tf = transform;
@@ -61,7 +67,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
                 context.Input.moveStopCallback += MoveStop;
                 context.Input.attackCallback += AttackMoveSpeed;
                 context.Input.attackCancelCallback += AttackMoveSpeed;
-                
+                camComp = context.Component.GetPComponent<PlayerCamouflageComponent>() as PlayerCamouflageComponent;
                 // 3D Object 연결
                 VivoxManager.Instance.SetParticipantObejct(gameObject);
             }
@@ -71,6 +77,23 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
         {
             if(context && context.Status.DataLoaded)
                 Currentyspeed = context.Input.IsAttacking && !context.Shooter.IsReloading ? context.Status.PlayerData.attackSpeed : context.Status.PlayerData.speed;
+
+            if (camouflageSteeringMove && onMove && camouflageTargetDirection.sqrMagnitude > 0.0001f)
+            {
+                if (camComp is not { IsDisguised: true })
+                    camouflageSteeringMove = false;
+                else
+                {
+                    float maxRad = camouflageTurnSpeedDegPerSec * Mathf.Deg2Rad * Time.fixedDeltaTime;
+                    Vector3 cur = prevDirection.sqrMagnitude > 0.0001f
+                        ? new Vector3(prevDirection.x, prevDirection.y, 0f).normalized
+                        : new Vector3(camouflageTargetDirection.x, camouflageTargetDirection.y, 0f);
+                    Vector3 tgt = new Vector3(camouflageTargetDirection.x, camouflageTargetDirection.y, 0f).normalized;
+                    Vector3 rotated = Vector3.RotateTowards(cur, tgt, maxRad, 0f);
+                    prevDirection = new Vector2(rotated.x, rotated.y);
+                }
+            }
+
             if(rd2D)
                 rd2D.linearVelocity = prevDirection * Currentyspeed;
         }
@@ -78,29 +101,50 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 
         void Move(Vector2 direction)
         {
+            // 이동 가능 시에만
             if(isMovable)
             {
-                Currentyspeed = context.Input.IsAttacking && !context.Shooter.IsReloading ? context.Status.PlayerData.attackSpeed : context.Status.PlayerData.speed;
-                onMove = true;
-                
-                Physics2D.queriesHitTriggers = true;  // Trigger Collider도 감지하도록 설정
-                RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0,-2.3f,0), Vector2.down,0.5f, LayerMask.GetMask("Ground"));
-                float type =0;
-                if (hit)
+                // 위장 중 전용 이동 방식 (입력 방향으로 즉시 스냅하지 않고, prevDirection이 점진적으로 회전)
+                if (camComp is { IsDisguised: true })
                 {
-                    if (hit.collider.CompareTag("GroundDrit"))
-                        type = 0;
-                    else if (hit.collider.CompareTag("GroundStone"))
-                        type = 1;
+                    Currentyspeed = context.Input.IsAttacking && !context.Shooter.IsReloading ? context.Status.PlayerData.attackSpeed : context.Status.PlayerData.speed;
+                    onMove = true;
+                    camouflageSteeringMove = true;
+                    camouflageTargetDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.zero;
+                    if (prevDirection.sqrMagnitude < 0.0001f && camouflageTargetDirection.sqrMagnitude > 0.0001f)
+                        prevDirection = camouflageTargetDirection;
+
+                    if(IsServerInitialized)
+                        MoveObserver(direction);
+                    else
+                        MoveServerRpc(direction);
                 }
-                context.Sfx.SetWalking(true,type);
-                prevDirection = direction;
-                rd2D.linearVelocity = new Vector2(direction.x, direction.y) * Currentyspeed;
+                //일반적인 이동 방식
+                else 
+                {
+                    camouflageSteeringMove = false;
+                    Currentyspeed = context.Input.IsAttacking && !context.Shooter.IsReloading ? context.Status.PlayerData.attackSpeed : context.Status.PlayerData.speed;
+                    onMove = true;
                 
-                if(IsServerInitialized)
-                    MoveObserver(direction);
-                else
-                    MoveServerRpc(direction);
+                    Physics2D.queriesHitTriggers = true;  // Trigger Collider도 감지하도록 설정
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0,-2.3f,0), Vector2.down,0.5f, LayerMask.GetMask("Ground"));
+                    float type =0;
+                    if (hit)
+                    {
+                        if (hit.collider.CompareTag("GroundDrit"))
+                            type = 0;
+                        else if (hit.collider.CompareTag("GroundStone"))
+                            type = 1;
+                    }
+                    context.Sfx.SetWalking(true,type);
+                    prevDirection = direction;
+                    //rd2D.linearVelocity = new Vector2(direction.x, direction.y) * Currentyspeed;
+                
+                    if(IsServerInitialized)
+                        MoveObserver(direction);
+                    else
+                        MoveServerRpc(direction);
+                }
             }
         }
 
@@ -135,6 +179,8 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
             if(!rd2D || !rd2D) return;
             
             onMove = false;
+            camouflageSteeringMove = false;
+            camouflageTargetDirection = Vector2.zero;
             context.Sfx.SetWalking(false);
             rd2D.linearVelocity = Vector2.zero;
             prevDirection = Vector2.zero;

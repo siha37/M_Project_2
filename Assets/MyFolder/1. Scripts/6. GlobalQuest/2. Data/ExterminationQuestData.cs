@@ -18,9 +18,8 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._2._Data
             [JsonProperty("TargetEnemyDataId")]ushort TargetEnemyDataId,
             [JsonProperty("OneTimeSpawnAmount")]int OneTimeSpawnAmount,
             [JsonProperty("BaseSpawnInvincibleOffTime")]float BaseSpawnInvincibleOffTime,
-            [JsonProperty("RewardCardId")]ushort rewardCardId,
-            [JsonProperty("DefeatCardId")]ushort defeatCardId) :
-            base(typeId,LimitTime, WaitingTime, Target,Progress,MaxSpawnCount,SpawnInterval,TargetEnemyDataId,OneTimeSpawnAmount,BaseSpawnInvincibleOffTime, rewardCardId, defeatCardId)
+            [JsonProperty("DefeatDamageStack")]ushort damageStack) :
+            base(typeId,LimitTime, WaitingTime, Target,Progress,MaxSpawnCount,SpawnInterval,TargetEnemyDataId,OneTimeSpawnAmount,BaseSpawnInvincibleOffTime,  damageStack)
         {
         }
     }

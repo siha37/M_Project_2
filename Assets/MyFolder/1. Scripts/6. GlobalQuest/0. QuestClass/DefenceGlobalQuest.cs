@@ -8,6 +8,7 @@ using MyFolder._1._Scripts._3._SingleTone;
 using MyFolder._1._Scripts._6._GlobalQuest._1._GlobalQuestSpawner;
 using MyFolder._1._Scripts._6._GlobalQuest._2._Data;
 using MyFolder._1._Scripts._6._GlobalQuest._3._Card;
+using MyFolder._1._Scripts._7._PlayerRole;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -55,10 +56,11 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._0._QuestClass
             point.QuestEnd();
             spawner.AllRemove();
             // 퀘스트 카드 시스템 연동
-            if (questData != null && QuestCardManager.Instance)
+            if (questData != null)
             {
-                QuestCardManager.Instance.HandleQuestFailure(questData);
+                DamageStackManager.Instance.DamageApply_Quest_Request(questData.DamageStack);
             }
+
             
             IsEnd = true;
         }

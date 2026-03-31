@@ -72,6 +72,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
         }
 
         // ─── 퀘스트 실패 처리 ─────────────────────────────────────
+        /*
         public void HandleQuestFailure(QuestData questData)
         {
             if (!IsServerInitialized) return;
@@ -81,7 +82,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
             {
                 var playerStatus = destroyer.GetComponent<PlayerStatus>();
                 var playerContext = playerStatus?.GetComponent<PlayerContext>();
-                var defeatCards = GenerateDefeatCardInstances(questData.defeatCardId, GetDefeatCardCount());
+                var defeatCards = GenerateDefeatCardInstances(questData.DamageStack, GetDefeatCardCount());
 
                 if (playerContext?.Sync?.Owner != null)
                     playerDefeatCards[playerContext.Sync.Owner.ClientId] = defeatCards;
@@ -89,7 +90,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._3._Card
                 ShowDefeatCardsToPlayer(destroyer, defeatCards);
             }
             LogManager.Log(LogCategory.System, "퀘스트 실패 - 제거자에게 패배 카드 배분 완료", this);
-        }
+        }*/
 
         private List<DefeatCardInstance> GenerateDefeatCardInstances(ushort cardTypeId, int count)
         {

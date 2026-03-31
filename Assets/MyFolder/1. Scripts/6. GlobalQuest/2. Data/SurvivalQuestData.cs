@@ -28,9 +28,8 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._2._Data
             [JsonProperty("MinusTiming")]float minusTiming,
             [JsonProperty("MinusMutiple")]float minusMutiple,
             [JsonProperty("SurviverTargetID")]ushort SurviverTargetID,
-            [JsonProperty("RewardCardId")]ushort rewardCardId,
-            [JsonProperty("DefeatCardId")]ushort defeatCardId) 
-            : base(typeId,LimitTime, WaitingTime,Target, Progress,MaxSpawnCount,SpawnInterval,TargetEnemyDataId,OneTimeSpawnAmount,BaseSpawnInvincibleOffTime, rewardCardId, defeatCardId)
+            [JsonProperty("DefeatDamageStack")]ushort damageStack) 
+            : base(typeId,LimitTime, WaitingTime,Target, Progress,MaxSpawnCount,SpawnInterval,TargetEnemyDataId,OneTimeSpawnAmount,BaseSpawnInvincibleOffTime,damageStack)
         {
             MinusProgress = minusProgress;
             MinusTiming = minusTiming;

@@ -262,6 +262,10 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
                 var nextRequest = pendingSelections.Dequeue();
                 ShowCardImmediate(nextRequest);
             }
+            else
+            {
+                cardSelectionPanel.SetActive(false);
+            }
         }
         /// <summary>
         /// 카드 선택 패널 표시
@@ -407,6 +411,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
             HideSelectionPanel();
             
             Feel_InGame.Instance.CardTimeOutFeel_Stop();
+            TimeOutActive = true;
             TimeOut.gameObject.SetActive(false);
             
             LogManager.Log(LogCategory.UI, $"카드 선택 확정: 인덱스 {selectedCardIndex} (숫자키 재입력)", this);
@@ -430,7 +435,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._2._Card
         /// </summary>
         private void Update()
         {
-            if (cardSelectionPanel && cardSelectionPanel.activeSelf && !TimeOutActive)
+            if (cardSelectionPanel.activeSelf && !TimeOutActive)
             {
                 float elapsedTime = Time.time - selectionStartTime;
                 if (elapsedTime >= displayDuration)

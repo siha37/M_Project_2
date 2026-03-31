@@ -7,6 +7,7 @@ using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using MyFolder._1._Scripts._0._Object._1._Spawner;
+using MyFolder._1._Scripts._11._Feel;
 using MyFolder._1._Scripts._8999._Utility.Corutin;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -111,10 +112,6 @@ namespace MyFolder._1._Scripts._3._SingleTone
                 {
                     SpawnSpawner();
                 }
-                else
-                {
-                    enemyLevel.Value++;
-                }
             }
         }
  
@@ -210,11 +207,21 @@ namespace MyFolder._1._Scripts._3._SingleTone
                 SpawnerCountSync(CurrentSpawner.Count);
             }
         }
+        
+        public void EnemyLevel_Up()
+        {
+            if (!IsServerInitialized) return;
+            
+            
+            Feel_InGame.Instance.AlertFeel_Start("조건 달성으로 적군 레벨이 증가합니다.");
+            enemyLevel.Value++;
+        }
 
         private void EnemyLevel_Changed(ushort oldValue, ushort newValue, bool isServer)
         {
             if(newValue != oldValue)
                 Enemylevel_Changed?.Invoke();
         }
+
     }
 }

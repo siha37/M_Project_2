@@ -10,6 +10,7 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._1._StageUI._2._EnemyLevel
         private void Start()
         {
             SpawnerManager.instance.Enemylevel_Changed += LevelUpdate;
+            
         }
 
         private void LevelUpdate()

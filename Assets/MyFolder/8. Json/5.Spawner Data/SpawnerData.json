@@ -2,11 +2,11 @@
   "data": [
     {
       "TypeId": 1,
-      "Hp": 100.0,
-      "SpawnInterval": 10.0,
-      "SpawnDelay": 3.0,
-      "MaxSpawnCount": 10,
-      "OneTimeSpawnAmount": 5
+      "Hp": 400.0,
+      "SpawnInterval": 15.0,
+      "SpawnDelay": 1.0,
+      "MaxSpawnCount": 5,
+      "OneTimeSpawnAmount": 1
     }
   ]
 }

@@ -171,9 +171,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest
             var quest = ctor(spawner, data, point);
             
             //다음 퀘스트 ID 증가
-            DataId++;
-            
-            LogManager.Log(LogCategory.Quest, $"QuestData 기반 퀘스트 생성: {type} (CardIds: Reward={data.rewardCardId}, Defeat={data.defeatCardId})", this);
+            DataId++;            
             
             return quest;
         }
@@ -228,6 +226,11 @@ namespace MyFolder._1._Scripts._6._GlobalQuest
                     if(!questTypeConst)lastQuestType = (GlobalQuestType)Random.Range(1, (int)GlobalQuestType.GlobalQuestTypeAmount);
                     // QuestData 기반 생성 방식 사용
                     GlobalQuestBase quest = Create(lastQuestType);
+                    if (quest == null)
+                    {
+                        LogManager.Log(LogCategory.Quest,"Quest가 더 존재하지 않습니다.");
+                        return;
+                    }
                     OnGlobalQuestCreated?.Invoke(quest);
                     globalQuests.Add(quest);
 
@@ -384,6 +387,8 @@ namespace MyFolder._1._Scripts._6._GlobalQuest
 
         private void CreateMarkFor(GlobalQuestBase quest)
         {
+            if (quest == null)
+                return;
             MapMarkType type = MapMarkType.Count;
             Color color = Color.white;
             type = MapMarkType.Area;

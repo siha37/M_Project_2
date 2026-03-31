@@ -93,7 +93,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._0._QuestClass
             // 퀘스트 카드 시스템 연동
             if (questData != null && QuestCardManager.Instance)
             {
-                QuestCardManager.Instance.HandleQuestFailure(questData);
+                //QuestCardManager.Instance.HandleQuestFailure(questData);
             }
             
             IsEnd = true;

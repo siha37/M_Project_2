@@ -5,6 +5,7 @@ using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Transporting;
 using MyFolder._1._Scripts._0._Object._0._Agent._0._Player;
+using MyFolder._1._Scripts._0._Object._4._Shooting;
 using MyFolder._1._Scripts._0._Object._5._ModifiableStat;
 using MyFolder._1._Scripts._1._UI._0._GameStage._2._Card;
 using MyFolder._1._Scripts._3._SingleTone;
@@ -152,21 +153,24 @@ namespace MyFolder._1._Scripts._13._Card
             // 오브젝트 제거
             if (state.networkObject)
                 state.networkObject.Despawn();
-
+            
+            conn.FirstObject.TryGetComponent(out PlayerStatus status);
+            ShootingData shootingData = status.GetShootingData;
+            
             // 카드 생성 및 UI 표시
-            var cards = GenerateRewardCards(state.rewardId, 3);
+            var cards = GenerateRewardCards(state.rewardId, 3,shootingData.burstCount);
             if(!pendingPlayerCards.ContainsKey(conn.ClientId))
                 pendingPlayerCards[conn.ClientId] = new Queue<List<RewardCardInstance>>();
             
             pendingPlayerCards[conn.ClientId].Enqueue(cards);
-
+            
             ShowRewardCardsTargetRpc(conn, cards);
 
             LogManager.Log(LogCategory.System, $"플레이어 {conn.ClientId}가 RewardObject 수집 완료 (instanceId={instanceId})", this);
         }
 
         // ─── 카드 생성 ────────────────────────────────────────────
-        private List<RewardCardInstance> GenerateRewardCards(ushort cardTypeId, int count)
+        private List<RewardCardInstance> GenerateRewardCards(ushort cardTypeId, int count,int burstCount)
         {
             var cardData = GameDataManager.Instance.GetRewardCardsByType(cardTypeId);
             var result = new List<RewardCardInstance>();
@@ -180,7 +184,7 @@ namespace MyFolder._1._Scripts._13._Card
             var selectedTypes = GetRandomStatTypes(count);
             foreach (var statType in selectedTypes)
             {
-                float value = GetRewardValue(cardData, statType);
+                float value = GetRewardValue(cardData, statType,burstCount);
                 result.Add(new RewardCardInstance(cardData, statType, value));
                 LogManager.Log(LogCategory.System, $"카드 생성: {cardData.cardName} - {statType} : {value:F1}%", this);
             }
@@ -203,7 +207,7 @@ namespace MyFolder._1._Scripts._13._Card
             return selected;
         }
 
-        private float GetRewardValue(RewardCardData data, StatType type)
+        private float GetRewardValue(RewardCardData data, StatType type,int burstCount)
         {
             return type switch
             {
@@ -214,7 +218,7 @@ namespace MyFolder._1._Scripts._13._Card
                 StatType.Defence        => UnityEngine.Random.Range(data.defenceMinPercentage,         data.defenceMaxPercentage),
                 StatType.BulletSize     => UnityEngine.Random.Range(data.bulletSizeMinPercentage,      data.bulletSizeMaxPercentage),
                 StatType.ShotDelay      => UnityEngine.Random.Range(data.shotDelayMinPercentage,       data.shotDelayMaxPercentage),
-                StatType.MagazineCapacity => UnityEngine.Random.Range(data.magazineCapacityMinPercentage, data.magazineCapacityMaxPercentage),
+                StatType.MagazineCapacity => UnityEngine.Random.Range(data.magazineCapacityMinPercentage, data.magazineCapacityMaxPercentage) * burstCount,
                 StatType.ReloadTime     => UnityEngine.Random.Range(data.reloadTimeMinPercentage,      data.reloadTimeMaxPercentage),
                 _                       => 0f
             };

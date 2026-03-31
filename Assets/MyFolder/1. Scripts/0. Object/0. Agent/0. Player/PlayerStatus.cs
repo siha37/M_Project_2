@@ -49,7 +49,7 @@ namespace MyFolder._1._Scripts._0._Object._0._Agent._0._Player
 
             while (!context.Sync.OnClient)
             {
-                yield return WaitForSecondsCache.Get(0.05f);
+                yield return WaitForSecondsCache.Get(0.1f);
             }
             // ✅ 모든 클라이언트에서 이벤트 구독
                 PlayerSettingManager.OnPlayerSettingsChanged += OnPlayerSettingsChanged;

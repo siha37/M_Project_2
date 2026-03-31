@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "Level": 1,
+      "Stack_Amount": "1000"
+    },
+    {
+      "Level": 2,
+      "Stack_Amount": "1500"
+    },
+    {
+      "Level": 3,
+      "Stack_Amount": "2000"
+    },
+    {
+      "Level": 4,
+      "Stack_Amount": "2500"
+    },
+    {
+      "Level": 5,
+      "Stack_Amount": "3000"
+    },
+    {
+      "Level": 6,
+      "Stack_Amount": "3500"
+    },
+    {
+      "Level": 7,
+      "Stack_Amount": "4000"
+    },
+    {
+      "Level": 8,
+      "Stack_Amount": "4500"
+    },
+    {
+      "Level": 9,
+      "Stack_Amount": "5000"
+    },
+    {
+      "Level": 10,
+      "Stack_Amount": "5500"
+    },
+    {
+      "Level": 11,
+      "Stack_Amount": "6000"
+    },
+    {
+      "Level": 12,
+      "Stack_Amount": "6500"
+    }
+  ]
+}

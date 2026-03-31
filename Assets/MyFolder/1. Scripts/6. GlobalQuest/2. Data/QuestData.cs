@@ -17,9 +17,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._2._Data
         protected ushort TargetEnemyDataId;
         protected float BaseSpawnInvincibleOffTime;
         
-        // 카드 ID 필드 추가
-        protected ushort RewardCardId;
-        protected ushort DefeatCardId;
+        protected int damageStack;
 
         [JsonConstructor]
         public QuestData(
@@ -33,8 +31,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._2._Data
             [JsonProperty("TargetEnemyDataId")]ushort TargetEnemyDataId,
             [JsonProperty("OneTimeSpawnAmount")]int OneTimeSpawnAmount,
             [JsonProperty("BaseSpawnInvincibleOffTime")]float BaseSpawnInvincibleOffTime,
-            [JsonProperty("RewardCardId")]ushort rewardCardId,
-            [JsonProperty("DefeatCardId")]ushort defeatCardId)
+            [JsonProperty("DefeatDamageStack")]int damageStack)
         {
             this.TypeId = typeId;
             this.LimitTime = LimitTime;
@@ -46,8 +43,7 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._2._Data
             this.TargetEnemyDataId = TargetEnemyDataId;
             this.OneTimeSpawnAmount = OneTimeSpawnAmount;
             this.BaseSpawnInvincibleOffTime = BaseSpawnInvincibleOffTime;
-            this.RewardCardId = rewardCardId;
-            this.DefeatCardId = defeatCardId;
+            this.damageStack = damageStack;
         }
         public ushort typeId => TypeId;
         public float  limitTime => LimitTime;
@@ -61,7 +57,6 @@ namespace MyFolder._1._Scripts._6._GlobalQuest._2._Data
         public float baseSpawnInvincibleOffTime =>BaseSpawnInvincibleOffTime;
         
         // 카드 ID 접근자 추가
-        public ushort rewardCardId => RewardCardId;
-        public ushort defeatCardId => DefeatCardId;
+        public int DamageStack => damageStack;
     }
 }

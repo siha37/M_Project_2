@@ -840,6 +840,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MikeMute",
+                    "type": "Button",
+                    "id": "9ae6971b-b0ec-4ac9-866a-6bdfde17b6a7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpeakMute",
+                    "type": "Button",
+                    "id": "8c83e775-992c-4ea4-8a14-d47245afb6b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1324,6 +1342,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "OptionOpen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94936a93-cd85-4205-918c-8e1104ea5ccb",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MikeMute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69b4dee2-f683-4dac-9cf2-beebb79179b2",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpeakMute",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

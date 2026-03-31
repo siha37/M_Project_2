@@ -27,38 +27,47 @@ namespace MyFolder._1._Scripts._3._SingleTone
 
         // 캐싱된 데이터
         private Dictionary<ushort, EnemyData> cachedEnemyData = new();
+        private Dictionary<ushort, EnemyData> cachedIntanceEnemyData = new();
         private Dictionary<ushort, PlayerData> cachedPlayerData = new();
         private Dictionary<ushort, ShootingData> cachedShootingData = new();
+        private Dictionary<ushort, ShootingData> cachedInstanceShootingData = new();
         private Dictionary<PlayerRoleType, PlayerRoleDefinition> playerRoleDefinitionsData = new();
+
+        // 데미지 누적 시스템
+        private Dictionary<ushort, DamageStackList> damageStackListsData = new();
+        private DamageStackRatio damageStackRatioData;
 
         //퀘스트
         private GlobalQuestManagerData globalQuestManagerData;
         private Dictionary<ushort, ExterminationQuestData> exterminationQuest = new();
         private Dictionary<ushort, DefenceQuestData> defenceQuest = new();
         private Dictionary<ushort, SurvivalQuestData> survivalQuest = new();
-        
+
         //퀘스트 오브젝트
         private Dictionary<ushort, AgentData> DefenceQuestObjectData = new();
         private Dictionary<ushort, AgentData> SurvivalQuestObjectData = new();
-        
+
         // 카드 데이터 캐시 추가
         private Dictionary<ushort, RewardCardData> cachedRewardCards = new();
+        private Dictionary<RewardCardRarity, List<ushort>> rewardCardIdsByRarity = new();
         private Dictionary<ushort, DefeatCardData> cachedDefeatCards = new();
-        
+
         //오브젝트 데이터 캐시
         private Dictionary<ushort, SpawnerData> cachedSpawnerData = new();
         private Dictionary<ushort, SpawnerManagerData> cachedSpawnerManagerData = new();
 
         public bool IsDataInitialized => isDataLocalLoaded;
+
         // 로컬별 초기화 플래그
         public bool isDataLocalLoaded = false;
         private bool _isPreloading = false;
 
-        [Header("Runtime Options")]
-        [SerializeField] private bool useCsvDownloader = false;
+        [Header("Runtime Options")] [SerializeField]
+        private bool useCsvDownloader = false;
 
-        [Header("Addressable Keys")]
-        [SerializeField] private string enemyDataKey = "EnemyData";
+        [Header("Addressable Keys")] [SerializeField]
+        private string enemyDataKey = "EnemyData";
+
         [SerializeField] private string playerDataKey = "PlayerData";
         [SerializeField] private string shootingDataKey = "ShootingData";
         [SerializeField] private string roleDefinitionKey = "RoleData";
@@ -66,14 +75,16 @@ namespace MyFolder._1._Scripts._3._SingleTone
         [SerializeField] private string exterminationQuestKey = "ExterminationData";
         [SerializeField] private string defenceQuestKey = "DefenceData";
         [SerializeField] private string survivalQuestKey = "SurvivalData";
-        
+        [SerializeField] private string damageStackListKey = "DamageStackData";
+        [SerializeField] private string damageStackRatioKey = "DamageStackRatioData";
+
         [SerializeField] private string defenceQuestObjectKey = "DefenceQuestObjectData";
         [SerializeField] private string survivalQuestObjectKey = "SurvivalQuestObjectData";
-        
+
         // 카드 데이터 Addressable Keys 추가
         [SerializeField] private string rewardCardDataKey = "RewardCardData";
         [SerializeField] private string defeatCardDataKey = "DefeatCardData";
-        
+
         [SerializeField] private string spawnerDataKey = "SpawnerData";
         [SerializeField] private string spawnerManagerDataKey = "SpawnerManagerData";
 
@@ -87,16 +98,17 @@ namespace MyFolder._1._Scripts._3._SingleTone
             // 서버에서 모든 데이터 사전 로딩
             StartCoroutine(PreloadAllGameData());
         }
-        
+
         public override void OnStopServer()
         {
             base.OnStopServer();
-    
+
             // 서버 종료 시 AI 데이터 초기화
             ResetGameData();
-    
+
             LogManager.Log(LogCategory.System, "GameDataManager 서버 종료 - AI 데이터 초기화 완료", this);
         }
+
         public override void OnStartClient()
         {
             // 클라이언트에서도 자체적으로 데이터 로딩
@@ -114,17 +126,19 @@ namespace MyFolder._1._Scripts._3._SingleTone
             LogManager.Log(LogCategory.System, "GameDataManager 데이터 로딩 시작", this);
 
             // 1. Enemy 데이터 로드
-            yield return StartCoroutine(LoadDataFromJSON(enemyDataKey,cachedEnemyData));
+            yield return StartCoroutine(LoadDataFromJSON(enemyDataKey, cachedEnemyData));
+            cachedIntanceEnemyData = new Dictionary<ushort, EnemyData>(cachedEnemyData);
 
             // 2. Player 데이터 로드
-            yield return StartCoroutine(LoadDataFromJSON(playerDataKey,cachedPlayerData));
+            yield return StartCoroutine(LoadDataFromJSON(playerDataKey, cachedPlayerData));
 
             // 3. Shooting 데이터 로드
             yield return StartCoroutine(LoadShootingDataFromJSON());
+            cachedInstanceShootingData = new Dictionary<ushort, ShootingData>(cachedShootingData);
 
             // 4. Role Definition 데이터 로드
             yield return StartCoroutine(LoadRoleDefinitionFromJSON());
-            
+
             // 5. GlobalQuestManager 데이터 로드
             yield return StartCoroutine(LoadGlobalQuestDataFromJSON());
 
@@ -136,32 +150,39 @@ namespace MyFolder._1._Scripts._3._SingleTone
 
             // 8. Survival Quest 데이터 로드
             yield return StartCoroutine(LoadSurvivalQuestFromJSON());
-            
+
             // 9. DefenceQuestObject 데이터 로드
-            yield return StartCoroutine(LoadDataFromJSON(defenceQuestObjectKey,DefenceQuestObjectData));
-            
+            yield return StartCoroutine(LoadDataFromJSON(defenceQuestObjectKey, DefenceQuestObjectData));
+
             // 10. SurvivalQuestObject 데이터 로드
-            yield return StartCoroutine(LoadDataFromJSON(survivalQuestObjectKey,SurvivalQuestObjectData));
-            
+            yield return StartCoroutine(LoadDataFromJSON(survivalQuestObjectKey, SurvivalQuestObjectData));
+
             // 11. Reward Card 데이터 로드
             yield return StartCoroutine(LoadRewardCardDataFromJSON());
-            
+
             // 12. Defeat Card 데이터 로드
             yield return StartCoroutine(LoadDefeatCardDataFromJSON());
-            
+
             // 13. Spawner 데이터 로드
-            yield return StartCoroutine(LoadDataFromJSON(spawnerDataKey,cachedSpawnerData));
+            yield return StartCoroutine(LoadDataFromJSON(spawnerDataKey, cachedSpawnerData));
 
             // 14. SpawnerManager 데이터 로드
             yield return StartCoroutine(LoadSpawnerManagerDataFromJSON());
-            
+
+            // 15. DamageStackManager 데이터 로드 
+            yield return StartCoroutine(LoadDamageStackDataFromJSON());
+
+            // 16. DamageStackRatio 데이터 로드
+            yield return StartCoroutine(LoadDamageStackRatioDataFromJSON());
+
+
             isDataLocalLoaded = true;
             _isPreloading = false;
             LogManager.Log(LogCategory.System, "GameDataManager 데이터 로딩 완료", this);
         }
-        
+
         // ObjectData 전용 로더
-        private IEnumerator LoadDataFromJSON<T>(string Key,Dictionary<ushort, T> targetCache)where T : ObjectData
+        private IEnumerator LoadDataFromJSON<T>(string Key, Dictionary<ushort, T> targetCache) where T : ObjectData
         {
             LogManager.Log(LogCategory.System, "AgentData 로드 시작", this);
 
@@ -174,7 +195,7 @@ namespace MyFolder._1._Scripts._3._SingleTone
                     targetCache.Clear();
                     foreach (var d in list)
                         targetCache.Add(d.typeId, d);
-                    LogManager.Log(LogCategory.System, $"{Key} 로컬 로드 완료: {cachedEnemyData.Count}", this);
+                    LogManager.Log(LogCategory.System, $"{Key} 로컬 로드 완료: {targetCache.Count}", this);
                     yield break;
                 }
                 catch (System.Exception ex)
@@ -200,7 +221,7 @@ namespace MyFolder._1._Scripts._3._SingleTone
                         targetCache.Add(id, data);
                     }
 
-                    LogManager.Log(LogCategory.System, $"{Key} 로드 완료: {cachedEnemyData.Count}", this);
+                    LogManager.Log(LogCategory.System, $"{Key} 로드 완료: {targetCache.Count}", this);
                 }
                 catch (System.Exception ex)
                 {
@@ -214,7 +235,7 @@ namespace MyFolder._1._Scripts._3._SingleTone
                 LogManager.LogError(LogCategory.System, $"{Key} 로드 실패: {handle.OperationException?.Message}", this);
             }
         }
-        
+
         //단독
         private IEnumerator LoadShootingDataFromJSON()
         {
@@ -266,7 +287,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"ShootingData 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"ShootingData 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
 
@@ -284,7 +306,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
                     playerRoleDefinitionsData.Clear();
                     foreach (var d in list)
                         playerRoleDefinitionsData.Add(d.GetRole, d);
-                    LogManager.Log(LogCategory.System, $"RoleDefinition 로컬 로드 완료: {playerRoleDefinitionsData.Count}", this);
+                    LogManager.Log(LogCategory.System, $"RoleDefinition 로컬 로드 완료: {playerRoleDefinitionsData.Count}",
+                        this);
                     yield break;
                 }
                 catch (System.Exception ex)
@@ -309,7 +332,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
                         playerRoleDefinitionsData.Add(data.GetRole, data);
                     }
 
-                    LogManager.Log(LogCategory.System, $"RoleDefinition 로드 완료: {playerRoleDefinitionsData.Count}", this);
+                    LogManager.Log(LogCategory.System, $"RoleDefinition 로드 완료: {playerRoleDefinitionsData.Count}",
+                        this);
                 }
                 catch (System.Exception ex)
                 {
@@ -320,14 +344,15 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"RoleDefinition 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"RoleDefinition 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
 
         //단독
         private IEnumerator LoadGlobalQuestDataFromJSON()
         {
-            
+
             LogManager.Log(LogCategory.System, "globalQuestManagerKey 로드 시작", this);
             // Local-first
             if (useCsvDownloader && TryLoadLocalJson(globalQuestManagerKey, out var localText))
@@ -337,7 +362,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
                     var list = JsonParcing.ReaderArray<GlobalQuestManagerData>(localText);
                     foreach (var d in list)
                         globalQuestManagerData = d;
-                    LogManager.Log(LogCategory.System, $"globalQuestManagerKey 로컬 로드 완료: {exterminationQuest.Count}", this);
+                    LogManager.Log(LogCategory.System, $"globalQuestManagerKey 로컬 로드 완료: {exterminationQuest.Count}",
+                        this);
                     yield break;
                 }
                 catch (System.Exception ex)
@@ -370,10 +396,11 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"exterminationQuest 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System,
+                    $"exterminationQuest 로드 실패: {handle.OperationException?.Message}", this);
             }
         }
-        
+
         //단독
         private IEnumerator LoadExterminationQuestFromJSON()
         {
@@ -388,7 +415,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
                     exterminationQuest.Clear();
                     foreach (var d in list)
                         exterminationQuest.Add(d.typeId, d);
-                    LogManager.Log(LogCategory.System, $"exterminationQuest 로컬 로드 완료: {exterminationQuest.Count}", this);
+                    LogManager.Log(LogCategory.System, $"exterminationQuest 로컬 로드 완료: {exterminationQuest.Count}",
+                        this);
                     yield break;
                 }
                 catch (System.Exception ex)
@@ -424,7 +452,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"exterminationQuest 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System,
+                    $"exterminationQuest 로드 실패: {handle.OperationException?.Message}", this);
             }
         }
 
@@ -478,7 +507,8 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"defenceQuest 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"defenceQuest 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
 
@@ -532,10 +562,11 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"survivalQuest 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"survivalQuest 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
-        
+
         //단독
         private IEnumerator LoadRewardCardDataFromJSON()
         {
@@ -550,6 +581,7 @@ namespace MyFolder._1._Scripts._3._SingleTone
                     cachedRewardCards.Clear();
                     foreach (var d in list)
                         cachedRewardCards.Add(d.cardId, d);
+                    RebuildRewardCardIdsByRarity();
                     LogManager.Log(LogCategory.System, $"RewardCard 로컬 로드 완료: {cachedRewardCards.Count}", this);
                     yield break;
                 }
@@ -575,6 +607,7 @@ namespace MyFolder._1._Scripts._3._SingleTone
                         cachedRewardCards.Add(data.cardId, data);
                     }
 
+                    RebuildRewardCardIdsByRarity();
                     LogManager.Log(LogCategory.System, $"RewardCard 로드 완료: {cachedRewardCards.Count}", this);
                 }
                 catch (System.Exception ex)
@@ -586,10 +619,11 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"RewardCard 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"RewardCard 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
-        
+
         //단독
         private IEnumerator LoadDefeatCardDataFromJSON()
         {
@@ -640,13 +674,14 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"DefeatCard 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"DefeatCard 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
 
         //단독        
         private IEnumerator LoadSpawnerManagerDataFromJSON()
-        {  
+        {
             LogManager.Log(LogCategory.System, "spawnerDataKey 로드 시작", this);
 
             // Local-first
@@ -694,10 +729,120 @@ namespace MyFolder._1._Scripts._3._SingleTone
             }
             else
             {
-                LogManager.LogError(LogCategory.System, $"DefeatCard 로드 실패: {handle.OperationException?.Message}", this);
+                LogManager.LogError(LogCategory.System, $"DefeatCard 로드 실패: {handle.OperationException?.Message}",
+                    this);
             }
         }
-        
+
+        //단독        
+        private IEnumerator LoadDamageStackDataFromJSON()
+        {
+            LogManager.Log(LogCategory.System, "DamageStackData 로드 시작", this);
+
+            // Local-first
+            if (useCsvDownloader && TryLoadLocalJson(damageStackListKey, out var localText))
+            {
+                try
+                {
+                    var list = JsonParcing.ReaderArray<DamageStackList>(localText);
+                    damageStackListsData.Clear();
+                    foreach (var d in list)
+                        damageStackListsData.Add(d.level, d);
+                    LogManager.Log(LogCategory.System, $"DamageStackData 로컬 로드 완료: {damageStackListsData.Count}", this);
+                    yield break;
+                }
+                catch (System.Exception ex)
+                {
+                    LogManager.LogWarning(LogCategory.System, $"DamageStackData 로컬 파싱 실패: {ex.Message}", this);
+                }
+            }
+
+            var handle = Addressables.LoadAssetAsync<TextAsset>(damageStackListKey);
+            yield return handle;
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                try
+                {
+                    var textAsset = handle.Result;
+                    var list = JsonParcing.ReaderArray<DamageStackList>(textAsset);
+
+                    damageStackListsData.Clear();
+                    foreach (var data in list)
+                    {
+                        damageStackListsData.Add(data.level, data);
+                    }
+
+                    LogManager.Log(LogCategory.System, $"DamageStackData 로드 완료: {damageStackListsData.Count}", this);
+                }
+                catch (System.Exception ex)
+                {
+                    LogManager.LogError(LogCategory.System, $"DamageStackData 파싱 오류: {ex.Message}", this);
+                }
+
+                Addressables.Release(handle);
+            }
+            else
+            {
+                LogManager.LogError(LogCategory.System, $"DamageStackData 로드 실패: {handle.OperationException?.Message}",
+                    this);
+            }
+        }
+
+        //단독
+        private IEnumerator LoadDamageStackRatioDataFromJSON()
+        {
+
+            LogManager.Log(LogCategory.System, "damageStackRatioKey 로드 시작", this);
+            // Local-first
+            if (useCsvDownloader && TryLoadLocalJson(damageStackRatioKey, out var localText))
+            {
+                try
+                {
+                    var list = JsonParcing.ReaderArray<DamageStackRatio>(localText);
+                    foreach (var d in list)
+                        damageStackRatioData = d;
+                    LogManager.Log(LogCategory.System, $"damageStackRatioKey 로컬 로드 완료: {exterminationQuest.Count}",
+                        this);
+                    yield break;
+                }
+                catch (System.Exception ex)
+                {
+                    LogManager.LogWarning(LogCategory.System, $"damageStackRatioKey 로컬 파싱 실패: {ex.Message}", this);
+                }
+            }
+
+            var handle = Addressables.LoadAssetAsync<TextAsset>(damageStackRatioKey);
+            yield return handle;
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                try
+                {
+                    var textAsset = handle.Result;
+                    var list = JsonParcing.ReaderArray<DamageStackRatio>(textAsset);
+
+                    foreach (var d in list)
+                        damageStackRatioData = d;
+
+                    LogManager.Log(LogCategory.System, $"damageStackRatioKey 로드 완료: {exterminationQuest.Count}",
+                        this);
+                }
+                catch (System.Exception ex)
+                {
+                    LogManager.LogError(LogCategory.System, $"damageStackRatioKey 파싱 오류: {ex.Message}", this);
+                }
+
+                Addressables.Release(handle);
+            }
+            else
+            {
+                LogManager.LogError(LogCategory.System,
+                    $"damageStackRatioKey 로드 실패: {handle.OperationException?.Message}", this);
+            }
+        }
+
+
         // Local JSON helper
         private bool TryLoadLocalJson(string key, out UnityEngine.TextAsset textAsset)
         {
@@ -724,6 +869,7 @@ namespace MyFolder._1._Scripts._3._SingleTone
         {
             useCsvDownloader = value;
         }
+
         #endregion
 
         #region DataGettor
@@ -735,12 +881,12 @@ namespace MyFolder._1._Scripts._3._SingleTone
 
         public ShootingData GetShootingDataById(ushort typeId)
         {
-            return cachedShootingData.GetValueOrDefault(typeId);
+            return cachedInstanceShootingData.GetValueOrDefault(typeId);
         }
 
         public EnemyData GetEnemyDataById(ushort typeId)
         {
-            return cachedEnemyData.GetValueOrDefault(typeId);
+            return cachedIntanceEnemyData.GetValueOrDefault(typeId);
         }
 
         public PlayerRoleDefinition GetPlayerRoleDefinitionByRole(PlayerRoleType roleType)
@@ -752,7 +898,17 @@ namespace MyFolder._1._Scripts._3._SingleTone
         {
             return globalQuestManagerData;
         }
-        
+
+        public Dictionary<ushort, DamageStackList> GetDamageStackData()
+        {
+            return damageStackListsData;
+        }
+
+        public DamageStackRatio GetDamageStackRatio()
+        {
+            return damageStackRatioData;
+        }
+
         public ExterminationQuestData GetExterminationDataById(ushort typeId)
         {
             return exterminationQuest.GetValueOrDefault(typeId);
@@ -777,13 +933,13 @@ namespace MyFolder._1._Scripts._3._SingleTone
         {
             return SurvivalQuestObjectData.GetValueOrDefault(typeId);
         }
-        
+
         // 카드 데이터 Getter 메서드들
         public RewardCardData GetRewardCardsByType(ushort cardId)
         {
             return cachedRewardCards.GetValueOrDefault(cardId);
         }
-        
+
         public DefeatCardData GetDefeatCardsByType(ushort cardId)
         {
             return cachedDefeatCards.GetValueOrDefault(cardId);
@@ -794,64 +950,105 @@ namespace MyFolder._1._Scripts._3._SingleTone
             if (cachedRewardCards.Count == 0) return 0;
             return cachedRewardCards.Keys.Max();
         }
-        
+
+        private void RebuildRewardCardIdsByRarity()
+        {
+            rewardCardIdsByRarity.Clear();
+            foreach (RewardCardRarity r in System.Enum.GetValues(typeof(RewardCardRarity)))
+                rewardCardIdsByRarity[r] = new List<ushort>();
+            foreach (var kv in cachedRewardCards)
+                rewardCardIdsByRarity[kv.Value.rarity].Add(kv.Key);
+        }
+
+        /// <summary>
+        /// 선호 등급 풀에서 무작위 cardId. 해당 풀이 비면 하위 등급 순으로 폴백 후, 그래도 없으면 전체 중 무작위.
+        /// </summary>
+        public bool TryPickRandomRewardCardIdByPreferredRarity(
+            RewardCardRarity preferred,
+            out ushort cardId,
+            out RewardCardRarity resolvedRarity)
+        {
+            cardId = 0;
+            resolvedRarity = RewardCardRarity.Normal;
+            if (cachedRewardCards.Count == 0)
+                return false;
+
+            foreach (var r in GetRewardRarityFallbackOrder(preferred))
+            {
+                if (rewardCardIdsByRarity.TryGetValue(r, out var list) && list.Count > 0)
+                {
+                    cardId = list[Random.Range(0, list.Count)];
+                    resolvedRarity = r;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static IEnumerable<RewardCardRarity> GetRewardRarityFallbackOrder(RewardCardRarity preferred)
+        {
+            switch (preferred)
+            {
+                case RewardCardRarity.Legend:
+                    yield return RewardCardRarity.Legend;
+                    yield return RewardCardRarity.Epic;
+                    yield return RewardCardRarity.Normal;
+                    yield break;
+                case RewardCardRarity.Epic:
+                    yield return RewardCardRarity.Epic;
+                    yield return RewardCardRarity.Normal;
+                    yield return RewardCardRarity.Legend;
+                    yield break;
+                default:
+                    yield return RewardCardRarity.Normal;
+                    yield return RewardCardRarity.Epic;
+                    yield return RewardCardRarity.Legend;
+                    yield break;
+            }
+        }
+
         public SpawnerData GetSpawnerDataById(ushort id)
         {
             return cachedSpawnerData.GetValueOrDefault(id);
         }
+
         public SpawnerManagerData GetSpawnerManagerDataById(ushort id)
         {
             return cachedSpawnerManagerData.GetValueOrDefault(id);
         }
-        
+
         public List<EnemyData> GetAllEnemyData()
         {
-            return cachedEnemyData.Values.ToList();
+            return cachedIntanceEnemyData.Values.ToList();
         }
-        
+
         public List<ShootingData> GetAllShootingData()
         {
-            return cachedShootingData.Values.ToList();
+            return cachedInstanceShootingData.Values.ToList();
         }
 
         #endregion
 
         #region Reset
-        
+
         /// <summary>
         /// 게임 종료 시 AI 데이터 초기화 (모든 패배 카드 효과 제거)
         /// </summary>
         public void ResetGameData()
         {
-            if(IsServerInitialized)
+            if (IsServerInitialized)
                 ResetGameData_Observers();
         }
 
         [ObserversRpc]
         private void ResetGameData_Observers()
         {
-            
-            // ===== EnemyData 초기화 =====
-            foreach(var enemyData in cachedEnemyData.Values)
-            {
-                enemyData.ClearHpModifiers();
-                enemyData.ClearSpeedModifiers();
-                enemyData.ClearAttackSpeedModifiers();
-            }
-    
-    
-            // ===== ShootingData 초기화 (패배 카드가 적용되는 부분) =====
-            foreach(var shootingData in cachedShootingData.Values)
-            {
-                shootingData.ClearBulletSpeedModifiers();   // 적 탄속
-                shootingData.ClearBulletDamageModifiers();  // 적 탄 데미지
-                shootingData.ClearBulletSizeModifiers();    // 적 탄 사이즈
-            }
-            
+            cachedIntanceEnemyData = new Dictionary<ushort, EnemyData>(cachedEnemyData);
+            cachedInstanceShootingData = new Dictionary<ushort, ShootingData>(cachedShootingData);
         }
 
         #endregion
-        
+
     }
 }
 

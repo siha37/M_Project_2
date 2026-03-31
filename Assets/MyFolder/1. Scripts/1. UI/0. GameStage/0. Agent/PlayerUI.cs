@@ -23,6 +23,9 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._0._Agent
         [Header("Name")]
         [SerializeField] protected TextMeshProUGUI nameText;
         
+        [Header("Interaction UI")]
+        [SerializeField] private GameObject interactionUI;
+        
         protected float targetShieldFill;
 
         protected override void Update()
@@ -229,6 +232,11 @@ namespace MyFolder._1._Scripts._1._UI._0._GameStage._0._Agent
         {
             if (playerMainHUD)
                 playerMainHUD.UpdateRewardHoldProgress(progress);
+        }
+
+        public void Interaction_OnOff(bool isOn)
+        {
+            interactionUI.SetActive(isOn);
         }
     }
 }

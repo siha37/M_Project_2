@@ -46,8 +46,8 @@ namespace MyFolder._1._Scripts._13._Card
         public float shotDelayMaxPercentage;
         
         // 장탄 수 증가
-        public float magazineCapacityMinPercentage;
-        public float magazineCapacityMaxPercentage;
+        public int magazineCapacityMinPercentage;
+        public int magazineCapacityMaxPercentage;
         
         public float reloadTimeMinPercentage;
         public float reloadTimeMaxPercentage;
@@ -65,7 +65,7 @@ namespace MyFolder._1._Scripts._13._Card
             [JsonProperty("CardId")] ushort cardId,
             [JsonProperty("CardName")] string cardName,
             [JsonProperty("Description")] string description,
-            [JsonProperty("Rarity")] RewardCardRarity rarity,
+            [JsonProperty("Rarity")] string rarity,
             [JsonProperty("BulletSpeedMinPercentage")] float bulletSpeedMinPercentage,
             [JsonProperty("BulletSpeedMaxPercentage")] float bulletSpeedMaxPercentage,
             [JsonProperty("BulletDamageMinPercentage")] float bulletDamageMinPercentage,
@@ -80,15 +80,15 @@ namespace MyFolder._1._Scripts._13._Card
             [JsonProperty("BulletSizeMaxPercentage")] float bulletSizeMaxPercentage,
             [JsonProperty("ShotDelayMinPercentage")] float shotDelayMinPercentage,
             [JsonProperty("ShotDelayMaxPercentage")] float shotDelayMaxPercentage,
-            [JsonProperty("MagazineCapacityMinPercentage")] float magazineCapacityMinPercentage,
-            [JsonProperty("MagazineCapacityMaxPercentage")] float magazineCapacityMaxPercentage,
+            [JsonProperty("MagazineCapacityMinPercentage")] int magazineCapacityMinPercentage,
+            [JsonProperty("MagazineCapacityMaxPercentage")] int magazineCapacityMaxPercentage,
             [JsonProperty("ReloadTimeMinPercentage")] float reloadTimeMinPercentage,
             [JsonProperty("ReloadTimeMaxPercentage")] float reloadTimeMaxPercentage)
         {
             this.cardId = cardId;
             this.cardName = cardName;
             this.description = description;
-            this.rarity = rarity;
+            this.rarity = (RewardCardRarity)Enum.Parse(typeof(RewardCardRarity), rarity);
             this.bulletSpeedMinPercentage = bulletSpeedMinPercentage;
             this.bulletSpeedMaxPercentage = bulletSpeedMaxPercentage;
             this.bulletDamageMinPercentage = bulletDamageMinPercentage;
